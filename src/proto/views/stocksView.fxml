@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="500.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proto.controllers.mainController">
+<VBox alignment="CENTER" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="500.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proto.controllers.stocksController">
    <children>
       <TextField text="Recherche" VBox.vgrow="NEVER">
          <VBox.margin>
@@ -39,7 +39,7 @@
              <Button minWidth="75.0" mnemonicParsing="false" text="Ajouter" GridPane.columnIndex="1" GridPane.rowIndex="1" />
              <Button minWidth="75.0" mnemonicParsing="false" text="Modifier" GridPane.columnIndex="0" GridPane.rowIndex="1" />
              <Button minWidth="75.0" mnemonicParsing="false" text="Supprimer" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-             <Button minWidth="100.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="100.0" text="Retour" GridPane.columnIndex="2" GridPane.rowIndex="2">
+             <Button minWidth="100.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="100.0" text="Retour" GridPane.columnIndex="2" GridPane.rowIndex="2" onAction="#goToLivres">
                <GridPane.margin>
                   <Insets bottom="5.0" />
                </GridPane.margin></Button>

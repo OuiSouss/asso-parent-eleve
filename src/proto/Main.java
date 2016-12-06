@@ -20,6 +20,9 @@ public class Main extends Application {
         root = FXMLLoader.load(getClass().getClassLoader().getResource("proto/views/livresView.fxml"));
         s = new Scene(root, 500, 300);
         core.addScene(SceneEnum.livresView, s);
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("proto/views/stocksView.fxml"));
+        s = new Scene(root, 500, 300);
+        core.addScene(SceneEnum.stocksView, s);
         core.switchScene(SceneEnum.mainView, "Association");
         primaryStage.show();
 
