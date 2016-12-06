@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane alignment="center" hgap="20.0" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proto.controllers.Controller">
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Button minHeight="40.0" minWidth="100.0" mnemonicParsing="false" text="Livres" />
+      <Button minHeight="40.0" minWidth="100.0" mnemonicParsing="false" text="Adhérents" GridPane.columnIndex="1" />
+      <Button minHeight="40.0" minWidth="100.0" mnemonicParsing="false" text="Commandes" GridPane.columnIndex="2" />
+   </children>
+   <padding>
+      <Insets bottom="50.0" left="20.0" right="20.0" top="50.0" />
+   </padding>
+</GridPane>

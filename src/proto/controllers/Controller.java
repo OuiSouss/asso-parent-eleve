@@ -1,4 +1,4 @@
-package proto;
+package proto.controllers;
 
 public class Controller {
 }
