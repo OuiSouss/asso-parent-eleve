@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="500.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proto.controllers.Controller">
+<VBox alignment="CENTER" minHeight="300.0" minWidth="500.0" prefHeight="300.0" prefWidth="500.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proto.controllers.mainController">
    <children>
       <TextField text="Recherche" VBox.vgrow="NEVER">
          <VBox.margin>

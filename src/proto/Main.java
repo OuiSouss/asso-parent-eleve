@@ -5,19 +5,33 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import proto.components.SceneEnum;
 
 public class Main extends Application {
 
+    public static Core core;
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("proto/views/stocksView.fxml"));
-        primaryStage.setTitle("Association");
-        primaryStage.setScene(new Scene(root, 500, 300));
+        core = new Core();
+        core.mainStage = primaryStage;
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("proto/views/mainView.fxml"));
+        Scene s = new Scene(root, 500, 300);
+        core.addScene(SceneEnum.mainView, s);
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("proto/views/livresView.fxml"));
+        s = new Scene(root, 500, 300);
+        core.addScene(SceneEnum.livresView, s);
+        core.switchScene(SceneEnum.mainView, "Association");
         primaryStage.show();
+
     }
 
-
+    public static Core getCore()
+    {
+        return core;
+    }
     public static void main(String[] args) {
         launch(args);
+
+
     }
 }
