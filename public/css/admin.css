@@ -1,0 +1,7 @@
+.show table td {
+    padding: 10px;
+}
+
+.show table tr td:first-child {
+    font-weight: bold;
+}
