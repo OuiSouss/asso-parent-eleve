@@ -23,12 +23,12 @@ $factory->define(App\Adherent::class, function (Faker\Generator $faker) {
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'address' => $faker->address,
+        'city' => $faker->city,
         'postal_code' => $faker->postcode,
         'phone' => $faker->phoneNumber,
         'begin_adhesion' => $faker->dateTime,
         'end_adhesion' => $faker->dateTime,
-        'contribution' => $faker->numberBetween(10, 40),
-        'active_account' => $faker->boolean(),
+        'contribution_id' => \App\Contribution::all()->random()->id,
         'user_id' => App\User::all()->random()->id,
     ];
 });

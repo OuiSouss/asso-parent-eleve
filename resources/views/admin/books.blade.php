@@ -36,7 +36,7 @@
             var button = $(event.relatedTarget);
             var adherent_id = button.data('id');
             var modal = $(this);
-            var url = '{{ route('adherents.destroy', ':adherent_id') }}';
+            var url = '{{ route('admin.adherents.destroy', ':adherent_id') }}';
             url = url.replace(':adherent_id', adherent_id);
             modal.find('.save').on('click', function (event) {
                 $.ajax({

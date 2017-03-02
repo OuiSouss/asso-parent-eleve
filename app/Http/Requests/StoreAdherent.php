@@ -26,6 +26,13 @@ class StoreAdherent extends FormRequest
         return [
             'first_name' => 'required',
             'last_name' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'postal_code' => 'required',
+            'phone' => 'required|regex:/0[1-9][0-9]{8}/',
+            'begin_adhesion' => 'required|date',
+            'end_adhesion' => 'required|date',
+            'contribution_id' => 'required',
         ];
     }
 }

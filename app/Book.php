@@ -6,6 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
+    public function getActualisedPriceAttribute() {
+        return $this->book_reference->initial_price;
+    }
+
+    public function getStateTextAttribute() {
+        switch ($this->state) {
+            default:
+                return 'Text';
+                break;
+        }
+    }
+
     public function order() {
         return $this->belongsTo('App\Order');
     }

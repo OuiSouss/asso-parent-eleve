@@ -17,13 +17,13 @@ class CreateBookReferencesTable extends Migration
             $table->increments('id');
             $table->tinyInteger('initial_price');
             $table->string('ISBN');
-            $table->timestamps();
             $table->integer('section_id')->unsigned();
             $table->foreign('section_id')->references('id')->on('section')->onDelete('restrict')->onUpdate('restrict');
             $table->integer('level_id')->unsigned();
             $table->foreign('level_id')->references('id')->on('level')->onDelete('restrict')->onUpdate('restrict');
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subject')->onDelete('restrict')->onUpdate('restrict');
+            $table->timestamps();
         });
     }
 

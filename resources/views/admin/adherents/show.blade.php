@@ -1,16 +1,16 @@
 @extends('admin.admin_template')
 
 @section('content_header')
-    <a href="{{ route('adherents.edit', $adherent) }}" class="btn btn-success">
+    <a href="{{ route('admin.adherents.edit', $adherent) }}" class="btn btn-success">
         <i class="fa fa-pencil-square-o"></i>
     </a>
 @endsection
 
 @section('content')
-    <div class='row show'>
+    <div class='row'>
         <div class='col-md-12'>
             <!-- Box -->
-            <div class="box">
+            <div class="box show">
                 <div class="box-body">
                     <table>
                         <tr>
@@ -20,6 +20,10 @@
                         <tr>
                             <td>Prénom</td>
                             <td>{{ $adherent->last_name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Contribution</td>
+                            <td>{{ $adherent->contribution }}</td>
                         </tr>
                         <tr>
                             <td>Email</td>
@@ -32,6 +36,10 @@
                         <tr>
                             <td>Adresse</td>
                             <td>{{ $adherent->address }}</td>
+                        </tr>
+                        <tr>
+                            <td>Ville</td>
+                            <td>{{ $adherent->city }}</td>
                         </tr>
                         <tr>
                             <td>Code postal</td>
@@ -47,21 +55,37 @@
                     @foreach ($adherent->orders as $order)
                         <b>Commande N°{{ $order->id }}</b>
                         <p>{{ count($order->books) }} livre(s)</p>
-                        <ul>
-                        @foreach($order->books as $book)
-                            <li>
-                                <ul>
-                                    <li>{{ $book->book_reference->initial_price }} €</li>
-                                    <li>{{ $book->state }}</li>
-                                    <li>{{ $book->book_reference->ISBN }}</li>
-                                    <li>{{ $book->book_reference->section->name }}</li>
-                                    <li>{{ $book->book_reference->level->name }}</li>
-                                    <li>{{ $book->book_reference->subject->name }}</li>
-                                </ul>
-                            </li>
-                        @endforeach
-                        </ul>
+                        <p>Montant : {{ $order->price }} €</p>
+                        @if(!$order->books->isEmpty())
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>ISBN</th>
+                                    <th>Niveau</th>
+                                    <th>Section</th>
+                                    <th>Matière</th>
+                                    <th>État</th>
+                                    <th>Prix</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($order->books as $book)
+                                    <tr>
+                                        <td>{{ $book->book_reference->ISBN }}</td>
+                                        <td>{{ $book->book_reference->level->name }}</td>
+                                        <td>{{ $book->book_reference->section->name }}</td>
+                                        <td>{{ $book->book_reference->subject->name }}</td>
+                                        <td>{{ $book->state_text }}</td>
+                                        <td>{{ $book->actualised_price }} €</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        @endif
                     @endforeach
+                    @if ($adherent->orders->isEmpty())
+                        <small>Pas de commandes à afficher</small>
+                    @endif
                 </div>
             </div>
         </div>

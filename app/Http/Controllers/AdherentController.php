@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Adherent;
+use App\Contribution;
+use App\Http\Requests\AdherentRequest;
 use App\Http\Requests\StoreAdherent;
 use Illuminate\Http\Request;
 
@@ -27,7 +29,8 @@ class AdherentController extends Controller
     public function create()
     {
         $adherent = new Adherent();
-        return view('admin.adherents.form', ['page_title' => 'Nouvel adhérent', 'adherent' => $adherent]);
+        $contributions = Contribution::all();
+        return view('admin.adherents.form', ['page_title' => 'Nouvel adhérent', 'adherent' => $adherent, 'contributions' => $contributions]);
     }
 
     /**
@@ -36,7 +39,7 @@ class AdherentController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAdherent $request)
     {
         $adherent = Adherent::create($request->all());
         return redirect()->route('adherents.show', $adherent);
@@ -62,7 +65,8 @@ class AdherentController extends Controller
     public function edit($id)
     {
         $adherent = Adherent::find($id);
-        return view('admin.adherents.form', ['page_title' => 'Nouvel adhérent', 'adherent' => $adherent]);
+        $contributions = Contribution::all();
+        return view('admin.adherents.form', ['page_title' => 'Nouvel adhérent', 'adherent' => $adherent, 'contributions' => $contributions]);
     }
 
     /**
@@ -76,7 +80,7 @@ class AdherentController extends Controller
     {
         $adherent = Adherent::find($id);
         $adherent->update($request->all());
-        return redirect()->route('adherents.show', $adherent);
+        return redirect()->route('admin.adherents.show', $adherent);
     }
 
     /**

@@ -18,15 +18,17 @@ class CreateAdherentsTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->text('address');
+            $table->text('city');
             $table->text('postal_code');
             $table->string('phone');
             $table->date('begin_adhesion');
             $table->date('end_adhesion');
-            $table->integer('contribution');
-            $table->boolean('active_account');
+            $table->integer('contribution_id')->unsigned();
+            $table->foreign('contribution_id')->references('id')->on('contributions')->onDelete('restrict')->onUpdate('restrict');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
+            //$table->boolean('active_account');
         });
     }
 
