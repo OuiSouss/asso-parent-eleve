@@ -15,7 +15,7 @@ Route::group(['prefix' => 'parent'], function () {
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index')->name('admin.index');
     Route::resource('adherents', 'AdherentController', ['as' => 'admin']);
-    Route::get('/orders', 'AdminController@orders')->name('admin.orders');
+    Route::resource('orders', 'OrderController', ['as' => 'admin']);
     Route::get('/books', 'AdminController@books')->name('admin.books');
 });
 

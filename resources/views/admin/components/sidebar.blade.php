@@ -8,7 +8,7 @@
                 </a>
             </li>
 
-            <li @if (Route::is('admin.orders')) class="active" @endif><a href="{{ route('admin.orders') }}">
+            <li @if (Route::is('admin.orders.*')) class="active" @endif><a href="{{ route('admin.orders.index') }}">
                     <i class="fa fa-shopping-cart"></i>
                     <span>Commandes</span>
                 </a>
