@@ -17,6 +17,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('adherents', 'AdherentController', ['as' => 'admin']);
     Route::resource('orders', 'OrderController', ['as' => 'admin']);
     Route::get('/books', 'AdminController@books')->name('admin.books');
+    Route::resource('books', 'BooksController', ['as' => 'admin']);
 });
 
 Route::group(['prefix' => 'test'], function () {
