@@ -14,7 +14,7 @@
                 </a>
             </li>
 
-            <li @if (Route::is('admin.books')) class="active" @endif><a href="{{ route('admin.books') }}">
+            <li @if (Route::is('admin.books.*')) class="active" @endif><a href="{{ route('admin.books.index') }}">
                     <i class="fa fa-book"></i>
                     <span>Livres</span>
                 </a>
