@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Book;
 use App\BookReference;
 use Illuminate\Http\Request;
 
@@ -51,13 +52,14 @@ class BooksController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  BookReference $book_reference
+     * @param  BookReference $book
      * @return \Illuminate\Http\Response
      */
     public function show(BookReference $book)
     {
+        $a_book = Book::where('book_reference_id', $book->id)->count();
         //return response($book);
-        return view('admin.books.show', ['page_title' => 'Informations sur le livre', 'book_reference' => $book]);
+        return view('admin.books.show', ['page_title' => 'Informations sur le livre', 'book_reference' => $book, 'a_book' => $a_book]);
     }
 
     /**

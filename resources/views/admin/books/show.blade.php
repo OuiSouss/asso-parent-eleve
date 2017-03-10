@@ -14,7 +14,6 @@
                 <div class="box-body">
                     <table>
                         <tr>
-                            {{ dump($book_reference) }}
                             <td>ISBN</td>
                             <td>{{ $book_reference->ISBN }}</td>
                         </tr>
@@ -23,7 +22,20 @@
                             <td>{{ $book_reference->initial_price }}</td>
                         </tr>
                         <tr>
-                            <td></td>
+                            <td>Section</td>
+                            <td>{{ $book_reference->section->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Niveau </td>
+                            <td> {{ $book_reference->level->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Matière</td>
+                            <td>{{ $book_reference->subject->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Nombre de livres avec cette référence</td>
+                            <td>{{ $a_book  }}</td>
                         </tr>
 
                     </table>
