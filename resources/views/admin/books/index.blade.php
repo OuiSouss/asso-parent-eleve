@@ -21,34 +21,24 @@
                             <th>Matière</th>
                             <th>Prix initial</th>
                             <th>ISBN</th>
-                            <th>Etat</th>
-                            <th>Disponbilité</th>
                             <th>Action</th>
                         </tr>
                         <thead>
 
                         <tbody>
-                        @foreach ($books as $book)
+                        @foreach ($book_references as $book_reference)
                             <tr>
-                                <td>{{ $book->id }}</td>
-                                <td>{{ $book->book_reference->section->name }}</td>
-                                <td>{{ $book->book_reference->level->name }}</td>
-                                <td>{{ $book->book_reference->subject->name}}</td>
-                                <td>{{ $book->book_reference->initial_price}}</td>
-                                <td>{{ $book->book_reference->ISBN }}</td>
-                                <td><span class="badge">{{ $book->state }}</span></td>
+                                <td>{{ $book_reference->id }}</td>
+                                <td>{{ $book_reference->section->name }}</td>
+                                <td>{{ $book_reference->level->name }}</td>
+                                <td>{{ $book_reference->subject->name }}</td>
+                                <td>{{ $book_reference->initial_price }}</td>
+                                <td>{{ $book_reference->ISBN }}</td>
                                 <td>
-                                    @if ($book->available)
-                                        <span class="badge bg-green">Oui</span>
-                                    @else
-                                        <span class="badge bg-red">Non</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ route('admin.books.show', $book->id) }}"
+                                    <a href="{{ route('admin.books.show', $book_reference->id) }}"
                                        class="btn btn-primary"><i class="fa fa-info-circle"></i></a>
                                     <a href="#" class="btn btn-danger" data-toggle="modal"
-                                       data-target="#modal_books_delete" data-id="{{ $book->id }}"><i
+                                       data-target="#modal_books_delete" data-id="{{ $book_reference->id }}"><i
                                                 class="fa fa-remove"></i></a>
                                 </td>
 

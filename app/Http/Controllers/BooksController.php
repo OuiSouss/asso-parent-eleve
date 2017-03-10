@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Book;
+
 use App\BookReference;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +21,8 @@ class BooksController extends Controller
      */
     public function index()
     {
-        $book = Book::all();
-        return view('admin.books.index', ['page_title' => 'Liste des livres', 'books' => $book]);
+        $book_references = BookReference::all();
+        return view('admin.books.index', ['page_title' => 'Liste des livres', 'book_references' => $book_references]);
     }
 
     /**
@@ -26,9 +32,8 @@ class BooksController extends Controller
      */
     public function create()
     {
-        $book = new Book();
-        $book_references = BookReference::all();
-        return view('admin.books.form', ['page_title' => 'Nouvel livre', 'book' => $book, 'book_references' => $book_references] );
+        $book_reference = new BookReference();
+        return view('admin.books.form', ['page_title' => 'Nouveau livre', 'book_reference' => $book_reference] );
     }
 
     /**
@@ -39,19 +44,20 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-        $book = Book::create($request->all());
-        return redirect()->route('books.show', $book);
+        $book_reference = BookReference::create($request->all());
+        return redirect()->route('books.show', $book_reference);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Book $book
+     * @param  BookReference $book_reference
      * @return \Illuminate\Http\Response
      */
-    public function show(Book $book)
+    public function show(BookReference $book)
     {
-        return view('admin.books.show', ['page_title' => 'Informations sur le livre', 'book' => $book]);
+        //return response($book);
+        return view('admin.books.show', ['page_title' => 'Informations sur le livre', 'book_reference' => $book]);
     }
 
     /**
@@ -62,9 +68,8 @@ class BooksController extends Controller
      */
     public function edit($id)
     {
-        $book = Book::find($id);
-        $bookReference = BookReference::all();
-        return view('admin.books.form', ['page_title' => 'Nouveau livre', 'book' => $book, 'bookReference' => $bookReference ]);
+        $book_reference = BookReference::find($id);
+        return view('admin.books.form', ['page_title' => 'Nouveau livre', 'book_reference' => $book_reference]);
     }
 
     /**
@@ -76,9 +81,9 @@ class BooksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $book = Book::find($id);
-        $book->update($request->all());
-        return redirect()->route('admin.book.show', $book);
+        $book_reference = BookReference::find($id);
+        $book_reference->update($request->all());
+        return redirect()->route('admin.book.show', $book_reference);
     }
 
     /**
@@ -89,11 +94,11 @@ class BooksController extends Controller
      */
     public function destroy($id)
     {
-        $book = Book::find($id);
+        $book_reference = BookReference::find($id);
 
-        if (!is_null($book))
+        if (!is_null($book_reference))
         {
-            $book->delete();
+            $book_reference->delete();
 
             return response()->json([
                 'status' => 'success',

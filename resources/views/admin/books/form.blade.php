@@ -15,7 +15,7 @@
                         {!! Form::label('state', 'Etat du livre', ['class' => 'col-md-2 control-label']) !!}
 
                         <div class="col-md-3">
-                            {!! Form::date('state', null, ['class' => 'form-control', 'placeholder' => 'Etat du livre']) !!}
+                            {!! Form::date('state', null, ['class' => 'form-control', 'placeholder' => '1']) !!}
 
                             @if ($errors->has('state'))
                                 <span class="help-block">
@@ -24,17 +24,20 @@
                             @endif
                         </div>
                     </div>
-                    <div class="form-group{{ $errors->has('book_reference_id') ? ' has-error' : '' }}">
-                        {!! Form::label('book_reference_id', 'BookReference', ['class' => 'col-md-2 control-label']) !!}
+                        <div class="form-group{{ $errors->has('available') ? ' has-error' : '' }}">
+                            {!! Form::label('availaible', 'Disponibilité', ['class' => 'col-md-2 control-label']) !!}
 
-                        <div class="col-md-10">
-                            {!! Form::select('book_reference_id', $book_reference_id, null, ['class' => 'form-control', 'select' => $book->book_reference_id]) !!}
-                            @if ($errors->has('book_reference_id'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('book_reference_id') }}</strong>
+                            <div class="col-md-3">
+                                {!! Form::date('available', null, ['class' => 'form-control', 'placeholder' => 'Oui']) !!}
+
+                                @if ($errors->has('available'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('available') }}</strong>
                                 </span>
-                            @endif
+                                @endif
+                            </div>
                         </div>
+
                     </div>
 
                 </div>

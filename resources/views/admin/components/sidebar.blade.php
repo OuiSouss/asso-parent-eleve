@@ -8,11 +8,12 @@
                 </a>
             </li>
 
-            <li @if (Route::is('admin.orders.*')) class="active" @endif><a href="{{ route('admin.orders.index') }}">
+           <li @if (Route::is('admin.orders')) class="active" @endif><a href="{{ route('admin.orders') }}">
                     <i class="fa fa-shopping-cart"></i>
                     <span>Commandes</span>
                 </a>
             </li>
+           
 
             <li @if (Route::is('admin.books.*')) class="active" @endif><a href="{{ route('admin.books.index') }}">
                     <i class="fa fa-book"></i>

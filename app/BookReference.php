@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class BookReference extends Model
 {
+    protected $guarded = [];
+
     public function section() {
         return $this->belongsTo('App\Section');
     }
@@ -16,5 +18,9 @@ class BookReference extends Model
 
     public function subject() {
         return $this->belongsTo('App\Subject');
+    }
+
+    public function book(){
+        return $this->hasMany('App\Book');
     }
 }
