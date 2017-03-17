@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('active');
-            $table->integer('adherent_id')->unsigned();
+            $table->unsignedInteger('adherent_id');
             $table->foreign('adherent_id')->references('id')->on('adherents')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
         });

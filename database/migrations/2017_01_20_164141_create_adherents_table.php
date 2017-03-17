@@ -23,9 +23,9 @@ class CreateAdherentsTable extends Migration
             $table->string('phone');
             $table->date('begin_adhesion');
             $table->date('end_adhesion');
-            $table->integer('contribution_id')->unsigned();
+            $table->unsignedInteger('contribution_id');
             $table->foreign('contribution_id')->references('id')->on('contributions')->onDelete('restrict')->onUpdate('restrict');
-            $table->integer('user_id')->unsigned();
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
             //$table->boolean('active_account');

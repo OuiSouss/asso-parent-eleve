@@ -17,9 +17,9 @@ class CreateBooksTable extends Migration
             $table->increments('id');
             $table->enum('state', [1, 2, 3, 4, 5]);
             $table->boolean('available');
-            $table->integer('order_id')->unsigned()->nullable();
+            $table->unsignedInteger('order_id')->nullable();
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('restrict')->onUpdate('restrict');
-            $table->integer('book_reference_id')->unsigned()->nullable();
+            $table->unsignedInteger('book_reference_id')->unsigned();
             $table->foreign('book_reference_id')->references('id')->on('book_references')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
         });
