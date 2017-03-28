@@ -58,8 +58,9 @@ class BooksController extends Controller
     public function show(BookReference $book)
     {
         $a_book = Book::where('book_reference_id', $book->id)->count();
+        $books = Book::where('book_reference_id', $book->id)->get();
         //return response($book);
-        return view('admin.books.show', ['page_title' => 'Informations sur le livre', 'book_reference' => $book, 'a_book' => $a_book]);
+        return view('admin.books.show', ['page_title' => 'Informations sur le livre', 'book_reference' => $book, 'a_book' => $a_book, 'books' => $books]);
     }
 
     /**
