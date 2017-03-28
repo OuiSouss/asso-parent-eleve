@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Mail\AccountActivationEmail;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 
 class Adherent extends Model
 {
@@ -22,5 +24,10 @@ class Adherent extends Model
 
     public function contribution() {
         return $this->belongsTo('App\Contribution');
+    }
+
+    public function sendAccountActivationEmail($token) {
+        Mail::to($this->user->email)
+            ->send(new AccountActivationEmail($token));
     }
 }

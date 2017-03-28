@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         factory(App\Subject::class, 3)->create();
         factory(App\Section::class, 3)->create();
         factory(App\BookReference::class, 10)->create();
-        factory(App\Order::class, 40)->create();
+        factory(App\Order::class, 10)->create();
         factory(App\Book::class, 40)->create();
+        factory(App\OrderBook::class, 50)->create();
     }
 }

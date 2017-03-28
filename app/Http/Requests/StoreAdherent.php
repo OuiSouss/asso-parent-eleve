@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreAdherent extends FormRequest
@@ -23,6 +24,12 @@ class StoreAdherent extends FormRequest
      */
     public function rules()
     {
+        $user = User::where('email', $this->get('email'))->first();
+
+        $email_rule = 'required|email|unique:users,email';
+        if (isset($user->id))
+            $email_rule .= ',\'' . $user->id;
+
         return [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -33,6 +40,7 @@ class StoreAdherent extends FormRequest
             'begin_adhesion' => 'required|date',
             'end_adhesion' => 'required|date',
             'contribution_id' => 'required',
+            'email' => $email_rule,
         ];
     }
 }

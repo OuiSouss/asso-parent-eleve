@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Adherent;
 use App\Contribution;
-use App\Http\Requests\AdherentRequest;
 use App\Http\Requests\StoreAdherent;
-use Illuminate\Http\Request;
+use App\User;
 
 class AdherentController extends Controller
 {
@@ -42,19 +41,33 @@ class AdherentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  StoreAdherent $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreAdherent $request)
     {
+        // Create user
+        $email = $request->get('email');
+        $password = bcrypt(str_random(10));
+        $user = User::create(['email' => $email, 'password' => $password]);
+
+        // Create adherent
+        $request->replace($request->except('email'));
+        $request->merge(['user_id' => $user->id]);
         $adherent = Adherent::create($request->all());
-        return redirect()->route('adherents.show', $adherent);
+
+        // Send email
+        $passwordBroker = app('auth.password.broker');
+        $token = $passwordBroker->createToken($user);
+        $adherent->sendAccountActivationEmail($token);
+
+        return redirect()->route('admin.adherents.show', $adherent);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  \App\Adherent $adherent
      * @return \Illuminate\Http\Response
      */
     public function show(Adherent $adherent)
@@ -85,7 +98,12 @@ class AdherentController extends Controller
     public function update(StoreAdherent $request, $id)
     {
         $adherent = Adherent::find($id);
-        $adherent->update($request->all());
+        $user = User::find($adherent->user_id);
+        $adherent->update($request->except('email'));
+
+        $email = ['email' => $request->get('email')];
+        $user->update($email);
+
         return redirect()->route('admin.adherents.show', $adherent);
     }
 
@@ -100,6 +118,7 @@ class AdherentController extends Controller
         $adherent = Adherent::find($id);
 
         if (!is_null($adherent)) {
+            $adherent->user->delete();
             $adherent->delete();
 
             return response()->json([

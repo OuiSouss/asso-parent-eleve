@@ -14,7 +14,6 @@ class TestController extends Controller
 {
     public function index() {
         Mail::to(User::find(1))
-            ->cc(User::find(2))
             ->bcc(User::find(3))
             ->send(new Reminder);
 

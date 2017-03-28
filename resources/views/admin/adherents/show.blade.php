@@ -75,7 +75,7 @@
                                         <td>{{ $book->book_reference->level->name }}</td>
                                         <td>{{ $book->book_reference->section->name }}</td>
                                         <td>{{ $book->book_reference->subject->name }}</td>
-                                        <td>{{ $book->state_text }}</td>
+                                        <td>{{ $book->state }}</td>
                                         <td>{{ $book->actualised_price }} €</td>
                                     </tr>
                                 @endforeach

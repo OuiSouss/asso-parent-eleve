@@ -72,7 +72,16 @@ $factory->define(App\Book::class, function (Faker\Generator $faker) {
     return [
         'state' => $faker->randomDigitNotNull()%5 + 1,
         'available' => $faker->boolean(),
-        'order_id' => App\Order::all()->random()->id,
         'book_reference_id' => App\BookReference::all()->random()->id,
     ];
 });
+
+$factory->define(App\OrderBook::class, function (Faker\Generator $faker) {
+    return [
+        'state' => $faker->randomDigitNotNull()%5 + 1,
+        'order_id' => App\Order::all()->random()->id,
+        'book_id' => App\Book::all()->random()->id,
+    ];
+});
+
+

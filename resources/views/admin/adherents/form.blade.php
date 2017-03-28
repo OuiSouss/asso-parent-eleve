@@ -39,6 +39,20 @@
                         </div>
                     </div>
 
+                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        {!! Form::label('email', 'Email', ['class' => 'col-md-2 control-label']) !!}
+
+                        <div class="col-md-10">
+                            {!! Form::email('email', !is_null($adherent->id) ? $adherent->user->email : null, ['class' => 'form-control', 'placeholder' => 'Email']) !!}
+
+                            @if ($errors->has('email'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+
                     <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                         {!! Form::label('address', 'Adresse', ['class' => 'col-md-2 control-label']) !!}
 
