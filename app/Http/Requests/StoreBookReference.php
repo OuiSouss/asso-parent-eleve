@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Book;
+use App\BookReference;
 use App\Level;
 use App\Section;
 use App\Subject;
@@ -26,13 +28,19 @@ class StoreBookReference extends FormRequest
      */
     public function rules()
     {
+        $isbn = BookReference::where('ISBN', $this->get('ISBN'))->first();
+
         $section = Section::where('name', $this->get('name'))->first();
         $level = Level::where('name', $this->get('name'))->first();
         $subject = Subject::where('name', $this->get('name'))->first();
 
+        $isbn_rule = 'required|unique:book_references|max:17';
         $section_rule = 'required|max:255';
         $level_rule = 'required|max:255';
         $subject_rule = 'required|max:255';
+
+        if (isset($isbn->id))
+            $isbn_rule .= ',\'' . $isbn->id;
 
         if (isset($section->id))
             $section_rule .= ',\'' . $section->id;
@@ -43,7 +51,7 @@ class StoreBookReference extends FormRequest
             $subject_rule .= ',\'' . $subject->id;
 
         return [
-            'ISBN' => 'required|unique|max:17',
+            'ISBN' => $isbn_rule,
             'initial_price' => 'required',
             'section_id' => 'required',
             'level_id' => 'required',

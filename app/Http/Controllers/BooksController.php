@@ -136,7 +136,7 @@ class BooksController extends Controller
 
         if (!is_null($book_reference))
         {
-            $books = Book::where('book_reference_id', $id )->get();
+            $books = Book::where('book_reference_id', $book_reference->id )->get();
             if ($books->count() != 0)
             {
                 $books_orders = [];
@@ -151,15 +151,12 @@ class BooksController extends Controller
                         if (! in_array($book, $books_orders))
                         {
                             $book->delete();
-                            return response()->json([
-                                'Books not in order delete' => 'success',
-                                'Book in order' => 'fail',
-                                'Book reference delete' => 'fail',
-                                'status' => 'not totally complete',
-                            ]);
 
                         }
                     }
+                    return response()->json([
+                        'status' => 'not totally complete',
+                    ]);
                 }
                 else
                 {
@@ -170,16 +167,14 @@ class BooksController extends Controller
                 }
             }
 
-            $book_reference->section->delete();
-            $book_reference->level->delete();
-            $book_reference->subject->delete();
+            //$book_reference->section->delete();
+            //$book_reference->level->delete();
+            //$book_reference->subject->delete();
 
 
             $book_reference->delete();
 
             return response()->json([
-                'Book not in order delete' => 'success',
-                'Book reference delete' => 'success',
                 'status' => 'success',
             ]);
         }
