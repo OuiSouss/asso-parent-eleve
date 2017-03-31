@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use App\BookReference;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreBookReference;
+use App\Level;
+use App\OrderBook;
+use App\Section;
+use App\Subject;
 
 class BooksController extends Controller
 {
@@ -34,19 +38,36 @@ class BooksController extends Controller
     public function create()
     {
         $book_reference = new BookReference();
-        return view('admin.books.form', ['page_title' => 'Nouveau livre', 'book_reference' => $book_reference] );
+        $levels = Level::all();
+        $sections = Section::all();
+        $subjects = Subject::all();
+        //return response($book_reference);
+        return view('admin.books.form', ['page_title' => 'Nouveau livre', 'book_reference' => $book_reference, 'levels' => $levels, 'sections' => $sections, 'subjects' => $subjects] );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Http\Requests\StoreBookReference $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBookReference $request)
     {
+
+        $n_section = $request->get('section_name');
+        $section = Section::create(['name' =>$n_section]);
+
+        $n_level = $request->get('level_name');
+        $level = Level::create(['name' => $n_level]);
+
+        $n_subject = $request->get('subject_name');
+        $subject = Subject::create(['name' => $n_subject]);
+
+        $request->replace($request->except('section_name', 'level_name', 'subject_name'));
+        $request->merge(['section_id' => $section->id, 'level_id' => $level->id, 'subject_id' => $subject->id]);
+
         $book_reference = BookReference::create($request->all());
-        return redirect()->route('books.show', $book_reference);
+        return redirect()->route('admin.books.show', $book_reference);
     }
 
     /**
@@ -59,7 +80,7 @@ class BooksController extends Controller
     {
         $a_book = Book::where('book_reference_id', $book->id)->count();
         $books = Book::where('book_reference_id', $book->id)->get();
-        //return response($book);
+        //return response($books);
         return view('admin.books.show', ['page_title' => 'Informations sur le livre', 'book_reference' => $book, 'a_book' => $a_book, 'books' => $books]);
     }
 
@@ -72,21 +93,34 @@ class BooksController extends Controller
     public function edit($id)
     {
         $book_reference = BookReference::find($id);
+        //return response($book_reference);
         return view('admin.books.form', ['page_title' => 'Nouveau livre', 'book_reference' => $book_reference]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Http\Requests\StoreBookReference $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreBookReference $request, $id)
     {
         $book_reference = BookReference::find($id);
-        $book_reference->update($request->all());
-        return redirect()->route('admin.book.show', $book_reference);
+        $section = Section::find($book_reference->section_id);
+        $level = Level::find($book_reference->level_id);
+        $subject = Subject::find($book_reference->subject_id);
+
+        $book_reference->update($request->except('section','level', 'subject'));
+        $n_section = ['name' => $request->get('section_name')];
+        $n_level = ['name' => $request->get('level_name')];
+        $n_subject = ['name' => $request->get('subject_name')];
+
+        $section->update($n_section);
+        $level->update($n_level);
+        $subject->update($n_subject);
+
+        return redirect()->route('admin.books.show', $book_reference);
     }
 
     /**
@@ -97,13 +131,55 @@ class BooksController extends Controller
      */
     public function destroy($id)
     {
+
         $book_reference = BookReference::find($id);
 
         if (!is_null($book_reference))
         {
+            $books = Book::where('book_reference_id', $id )->get();
+            if ($books->count() != 0)
+            {
+                $books_orders = [];
+                foreach ($books as $book)
+                {
+                    $books_orders = OrderBook::where('book_id', $book->id)->get();
+                }
+                if ($books_orders->count() != 0)
+                {
+                    foreach ($books as $book)
+                    {
+                        if (! in_array($book, $books_orders))
+                        {
+                            $book->delete();
+                            return response()->json([
+                                'Books not in order delete' => 'success',
+                                'Book in order' => 'fail',
+                                'Book reference delete' => 'fail',
+                                'status' => 'not totally complete',
+                            ]);
+
+                        }
+                    }
+                }
+                else
+                {
+                    foreach ($books as $book)
+                    {
+                        $book->delete();
+                    }
+                }
+            }
+
+            $book_reference->section->delete();
+            $book_reference->level->delete();
+            $book_reference->subject->delete();
+
+
             $book_reference->delete();
 
             return response()->json([
+                'Book not in order delete' => 'success',
+                'Book reference delete' => 'success',
                 'status' => 'success',
             ]);
         }
