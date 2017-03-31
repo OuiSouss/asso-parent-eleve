@@ -4,8 +4,6 @@
     <a href="{{ route('admin.books.create') }}" class="btn btn-success">
         <i class="fa fa-plus"></i>
     </a>
-
-    {{ trans('passwords.config.message') }}
 @endsection
 
 @section('content')

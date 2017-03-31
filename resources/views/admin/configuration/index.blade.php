@@ -28,7 +28,7 @@
                                     <td>{{ $contribution->cost }}</td>
                                     <td>
                                     <a href="{{ route('admin.contribution.edit', $contribution->id) }}"
-                                       class="btn btn-primary"><i class="fa fa-info-circle"></i></a>
+                                       class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                                     <a href="#" class="btn btn-danger" data-toggle="modal"
                                        data-target="#modal_contribution_delete" data-id="{{ $contribution->id }}"><i
                                                 class="fa fa-remove"></i></a>

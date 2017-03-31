@@ -12,10 +12,10 @@
                     @endif
 
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                        {!! Form::label('name', 'Prénom', ['class' => 'col-md-2 control-label']) !!}
+                        {!! Form::label('name', 'Intitulé', ['class' => 'col-md-2 control-label']) !!}
 
                         <div class="col-md-10">
-                            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Prénom']) !!}
+                            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Intitulé']) !!}
 
                             @if ($errors->has('name'))
                                 <span class="help-block">
@@ -26,10 +26,10 @@
                     </div>
 
                     <div class="form-group{{ $errors->has('cost') ? ' has-error' : '' }}">
-                        {!! Form::label('cost', 'Nom', ['class' => 'col-md-2 control-label']) !!}
+                        {!! Form::label('cost', 'Prix', ['class' => 'col-md-2 control-label']) !!}
 
                         <div class="col-md-10">
-                            {!! Form::text('cost', null, ['class' => 'form-control', 'placeholder' => 'Nom']) !!}
+                            {!! Form::text('cost', null, ['class' => 'form-control', 'placeholder' => 'Prix']) !!}
 
                             @if ($errors->has('cost'))
                                 <span class="help-block">
