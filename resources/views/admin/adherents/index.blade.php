@@ -56,7 +56,6 @@
             </div>
         </div><!-- /.box -->
     </div><!-- /.col -->
-    </div><!-- /.row -->
 @endsection
 
 @include('admin.modals.adherents_delete')

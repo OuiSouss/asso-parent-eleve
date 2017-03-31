@@ -1,11 +1,9 @@
-@extends('admin/admin_template')
+@extends('admin.admin_template')
 
 @section('content_header')
-    <a href="{{ route('admin.books.create') }}" class="btn btn-success">
+    <a href="{{ route('admin.orders.create') }}" class="btn btn-success">
         <i class="fa fa-plus"></i>
     </a>
-
-    {{ trans('passwords.config.message') }}
 @endsection
 
 @section('content')
@@ -18,44 +16,51 @@
                         <thead>
                         <tr>
                             <th style="width: 10px">#</th>
-                            <th>Section</th>
-                            <th>Niveau</th>
-                            <th>Matière</th>
-                            <th>Prix initial</th>
-                            <th>ISBN</th>
+                            <th>Payée</th>
+                            <th>Adhérent</th>
+                            <th>Passée le</th>
+                            <th>Date mise à jour</th>
                             <th>Action</th>
                         </tr>
                         <thead>
-
                         <tbody>
-                        @foreach ($book_references as $book_reference)
+                        @foreach ($orders as $order)
                             <tr>
-                                <td>{{ $book_reference->id }}</td>
-                                <td>{{ $book_reference->section->name }}</td>
-                                <td>{{ $book_reference->level->name }}</td>
-                                <td>{{ $book_reference->subject->name }}</td>
-                                <td>{{ $book_reference->initial_price }}</td>
-                                <td>{{ $book_reference->ISBN }}</td>
+                                <td>{{ $order->id }}</td>
                                 <td>
-                                    <a href="{{ route('admin.books.show', $book_reference->id) }}"
+                                    @if ($order->active)
+                                        <span class="badge bg-green">Oui</span>
+                                    @else
+                                        <span class="badge bg-red">Non</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @foreach($adherent as $adh)
+                                        @if($adh->id == $order->adherent_id)
+                                            {{$adh->first_name}}  {{ $adh->last_name}}
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td>{{ $order->created_at }}</td>
+                                <td>{{ $order->updated_at }}</td>
+                                <td>
+                                    <a href="{{ route('admin.orders.show', $order->id) }}"
                                        class="btn btn-primary"><i class="fa fa-info-circle"></i></a>
                                     <a href="#" class="btn btn-danger" data-toggle="modal"
-                                       data-target="#modal_books_delete" data-id="{{ $book_reference->id }}"><i
+                                       data-target="#modal_adherents_delete" data-id="{{ $order->id }}"><i
                                                 class="fa fa-remove"></i></a>
                                 </td>
-
                             </tr>
                         @endforeach
                         </tbody>
-
                     </table>
                 </div>
-            </div><!-- /.box -->
-        </div><!-- /.col -->
-    </div><!-- /.row -->
+            </div>
+        </div><!-- /.box -->
+    </div><!-- /.col -->
 @endsection
 
-@include('admin/modals/books_delete')
+@include('admin.modals.adherents_delete')
 
 @section('scripts')
     <script>
@@ -63,8 +68,8 @@
             var button = $(event.relatedTarget);
             var adherent_id = button.data('id');
             var modal = $(this);
-            var url = '{{ route('admin.adherents.destroy', ':adherent_id') }}';
-            url = url.replace(':adherent_id', adherent_id);
+            var url = '{{ route('admin.orders.destroy', ':orders_id') }}';
+            url = url.replace(':orders_id', adherent_id);
             modal.find('.save').on('click', function (event) {
                 $.ajax({
                     url: url,

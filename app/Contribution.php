@@ -10,4 +10,6 @@ class Contribution extends Model
     {
         return $this->name;
     }
+
+    protected $guarded = [];
 }
