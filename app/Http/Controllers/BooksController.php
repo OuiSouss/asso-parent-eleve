@@ -107,15 +107,18 @@ class BooksController extends Controller
     public function update(StoreBookReference $request, $id)
     {
         $book_reference = BookReference::find($id);
+
         $section = Section::find($book_reference->section_id);
         $level = Level::find($book_reference->level_id);
         $subject = Subject::find($book_reference->subject_id);
 
-        $book_reference->update($request->except('section','level', 'subject'));
+        $book_reference->update($request->except('ISBN','section','level', 'subject'));
+        $isbn = ['ISBN' => $request->get('ISBN')];
         $n_section = ['name' => $request->get('section_name')];
         $n_level = ['name' => $request->get('level_name')];
         $n_subject = ['name' => $request->get('subject_name')];
 
+        $book_reference->update($isbn);
         $section->update($n_section);
         $level->update($n_level);
         $subject->update($n_subject);

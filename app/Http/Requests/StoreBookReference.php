@@ -34,7 +34,7 @@ class StoreBookReference extends FormRequest
         $level = Level::where('name', $this->get('name'))->first();
         $subject = Subject::where('name', $this->get('name'))->first();
 
-        $isbn_rule = 'required|unique:book_references|max:17';
+        $isbn_rule = 'required|unique:book_references,|max:17';
         $section_rule = 'required|max:255';
         $level_rule = 'required|max:255';
         $subject_rule = 'required|max:255';
