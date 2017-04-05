@@ -15,7 +15,7 @@
                         {!! Form::label('ISBN', 'ISBN', ['class' => 'col-md-2 control-label']) !!}
 
                         <div class="col-md-3">
-                            {!! Form::text('ISBN', !is_null($book_reference->id) ? $book_reference->ISBN : null, ['class' => 'form-control', 'placeholder' => $book_reference->ISBN]) !!}
+                            {!! Form::text('ISBN', !is_null($book_reference->id) ? $book_reference->ISBN : null, ['class' => 'form-control', 'placeholder' => 'ISBN']) !!}
 
                             @if ($errors->has('ISBN'))
                                 <span class="help-block">
@@ -28,13 +28,13 @@
                             {!! Form::label('initial_price', 'Prix initial', ['class' => 'col-md-2 control-label']) !!}
 
                             <div class="col-md-3">
-                                {!! Form::number('initial_price', $book_reference->initial_price, ['class' => 'form-control', 'placeholder' => $book_reference->initial_price]) !!}
-
+                                <input class="form-control" placeholder="Prix initial" type="number" name="initial_price" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" title="This should be a number with up to 2 decimal places." value="{{ isset($book_reference->id) ? $book_reference->initial_price : '0.00' }}" >
                                 @if ($errors->has('initial_price'))
                                     <span class="help-block">
                                     <strong>{{ $errors->first('initial_price') }}</strong>
                                 </span>
                                 @endif
+
                             </div>
                         </div>
 
@@ -42,7 +42,7 @@
                             {!! Form::label('section_name', 'Section', ['class' => 'col-md-2 control-label']) !!}
 
                             <div class="col-md-3">
-                                {!! Form::text('section_name', $book_reference->section->name, ['class' => 'form-control', 'placeholder' => $book_reference->section->name]) !!}
+                                {!! Form::text('section_name',!is_null($book_reference->id) ? $book_reference->section->name : null, ['class' => 'form-control', 'placeholder' => 'Section']) !!}
 
                                 @if ($errors->has('section_name'))
                                     <span class="help-block">
@@ -55,7 +55,7 @@
                             {!! Form::label('level_name', 'Niveau', ['class' => 'col-md-2 control-label']) !!}
 
                             <div class="col-md-3">
-                                {!! Form::text('level_name', $book_reference->level->name, ['class' => 'form-control', 'placeholder' => $book_reference->level->name]) !!}
+                                {!! Form::text('level_name',!is_null($book_reference->id) ? $book_reference->level->name : null, ['class' => 'form-control', 'placeholder' => 'Niveau']) !!}
 
                                 @if ($errors->has('level_name'))
                                     <span class="help-block">
@@ -69,7 +69,7 @@
                             {!! Form::label('subject_name', 'Matière', ['class' => 'col-md-2 control-label']) !!}
 
                             <div class="col-md-3">
-                                {!! Form::text('subject_name', $book_reference->subject->name, ['class' => 'form-control', 'placeholder' => $book_reference->subject->name]) !!}
+                                {!! Form::text('subject_name',!is_null($book_reference->id) ? $book_reference->subject->name : null, ['class' => 'form-control', 'placeholder' => 'Matière']) !!}
 
                                 @if ($errors->has('subject_name'))
                                     <span class="help-block">

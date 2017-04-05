@@ -10,6 +10,7 @@ use App\Level;
 use App\OrderBook;
 use App\Section;
 use App\Subject;
+use function MongoDB\BSON\toJSON;
 
 class BooksController extends Controller
 {
@@ -53,6 +54,8 @@ class BooksController extends Controller
      */
     public function store(StoreBookReference $request)
     {
+        $isbn = $request->get('ISBN');
+        //$init_price = $request->get('initial_price');
 
         $n_section = $request->get('section_name');
         $section = Section::create(['name' =>$n_section]);
@@ -63,8 +66,8 @@ class BooksController extends Controller
         $n_subject = $request->get('subject_name');
         $subject = Subject::create(['name' => $n_subject]);
 
-        $request->replace($request->except('section_name', 'level_name', 'subject_name'));
-        $request->merge(['section_id' => $section->id, 'level_id' => $level->id, 'subject_id' => $subject->id]);
+        $request->replace($request->except('ISBN', 'section_name', 'level_name', 'subject_name'));
+        $request->merge(['ISBN' => $isbn, 'section_id' => $section->id, 'level_id' => $level->id, 'subject_id' => $subject->id]);
 
         $book_reference = BookReference::create($request->all());
         return redirect()->route('admin.books.show', $book_reference);
@@ -80,8 +83,21 @@ class BooksController extends Controller
     {
         $a_book = Book::where('book_reference_id', $book->id)->count();
         $books = Book::where('book_reference_id', $book->id)->get();
-        //return response($books);
-        return view('admin.books.show', ['page_title' => 'Informations sur le livre', 'book_reference' => $book, 'a_book' => $a_book, 'books' => $books]);
+        $bks = Book::where('book_reference_id', $book->id)->get();
+        $un_a = $bks->where('available', 1)->where('state', 1)->count();
+        $deux_a = $bks->where('available', 1)->where('state', 2)->count();
+        $trois_a = $bks->where('available', 1)->where('state', 3)->count();
+        $quatre_a = $bks->where('available', 1)->where('state', 4)->count();
+        $cinq_a = $bks->where('available', 1)->where('state', 5)->count();
+        $available = array($un_a,$deux_a, $trois_a, $quatre_a, $cinq_a);
+        $un_n = $bks->where('available', 0)->where('state', 1)->count();
+        $deux_n = $bks->where('available', 0)->where('state', 2)->count();
+        $trois_n = $bks->where('available', 0)->where('state', 3)->count();
+        $quatre_n = $bks->where('available', 0)->where('state', 4)->count();
+        $cinq_n = $bks->where('available', 0)->where('state', 5)->count();
+        $not_available = array($un_n,$deux_n, $trois_n, $quatre_n, $cinq_n);
+        //return response($not_available);
+        return view('admin.books.show', ['page_title' => 'Informations sur le livre', 'book_reference' => $book, 'a_book' => $a_book, 'books' => $books, 'available' => json_encode($available), 'not_available' => json_encode($not_available)]);
     }
 
     /**
@@ -106,6 +122,7 @@ class BooksController extends Controller
      */
     public function update(StoreBookReference $request, $id)
     {
+
         $book_reference = BookReference::find($id);
 
         $section = Section::find($book_reference->section_id);

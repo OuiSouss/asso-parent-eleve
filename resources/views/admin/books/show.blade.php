@@ -38,6 +38,7 @@
                             <td>{{ $a_book  }}</td>
                         </tr>
 
+
                     </table>
                 </div>
             </div>
@@ -80,15 +81,15 @@
                 type: 'bar'
             },
             title: {
-                text: 'Stacked bar chart'
+                text: 'Etat livres libres/pris'
             },
             xAxis: {
-                categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+                categories: ['1', '2', '3', '4', '5']
             },
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Total fruit consumption'
+                    text: 'Nombre de livres'
                 }
             },
             legend: {
@@ -100,14 +101,11 @@
                 }
             },
             series: [{
-                name: 'John',
-                data: [5, 3, 4, 7, 2]
+                name: 'Available',
+                data: {{  $available }}
             }, {
-                name: 'Jane',
-                data: [2, 2, 3, 2, 1]
-            }, {
-                name: 'Joe',
-                data: [3, 4, 4, 2, 5]
+                name: 'Not available',
+                data: {{ $not_available }}
             }]
         });
 

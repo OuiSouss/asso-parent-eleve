@@ -15,7 +15,7 @@ class CreateBookReferencesTable extends Migration
     {
         Schema::create('book_references', function (Blueprint $table) {
             $table->increments('id');
-            $table->tinyInteger('initial_price');
+            $table->float('initial_price');
             $table->string('ISBN');
             $table->unsignedInteger('section_id');
             $table->foreign('section_id')->references('id')->on('section')->onDelete('restrict')->onUpdate('restrict');
