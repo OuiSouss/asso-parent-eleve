@@ -35,7 +35,9 @@
                         </tr>
                         <tr>
                             <td>Nombre de livres avec cette référence</td>
-                            <td>{{ $a_book  }}</td>
+                            <td>
+                                <span class="badge">{{ $a_book  }}</span>
+                            </td>
                         </tr>
 
 
@@ -78,13 +80,13 @@
     <script>
         Highcharts.chart('histo', {
             chart: {
-                type: 'bar'
+                type: 'bar',
             },
             title: {
                 text: 'Etat livres libres/pris'
             },
             xAxis: {
-                categories: ['1', '2', '3', '4', '5']
+                categories: ['5', '4', '3', '2', '1']
             },
             yAxis: {
                 min: 0,
@@ -97,14 +99,23 @@
             },
             plotOptions: {
                 series: {
-                    stacking: 'normal'
+                    stacking: 'normal',
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function () {
+                                location.href = '{{url("admin/books_views/")}}/' + {{$book_reference->id}} + '/' + this.series.name + '/' + this.category ;
+                                //alert('Category: ' + this.category + 'value: ' + this.y);
+                            }
+                        }
+                    }
                 }
             },
             series: [{
                 name: 'Available',
                 data: {{  $available }}
             }, {
-                name: 'Not available',
+                name: 'Not_available',
                 data: {{ $not_available }}
             }]
         });

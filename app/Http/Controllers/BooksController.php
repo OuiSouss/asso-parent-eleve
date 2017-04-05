@@ -89,13 +89,13 @@ class BooksController extends Controller
         $trois_a = $bks->where('available', 1)->where('state', 3)->count();
         $quatre_a = $bks->where('available', 1)->where('state', 4)->count();
         $cinq_a = $bks->where('available', 1)->where('state', 5)->count();
-        $available = array($un_a,$deux_a, $trois_a, $quatre_a, $cinq_a);
+        $available = array( $cinq_a, $quatre_a, $trois_a, $deux_a, $un_a);
         $un_n = $bks->where('available', 0)->where('state', 1)->count();
         $deux_n = $bks->where('available', 0)->where('state', 2)->count();
         $trois_n = $bks->where('available', 0)->where('state', 3)->count();
         $quatre_n = $bks->where('available', 0)->where('state', 4)->count();
         $cinq_n = $bks->where('available', 0)->where('state', 5)->count();
-        $not_available = array($un_n,$deux_n, $trois_n, $quatre_n, $cinq_n);
+        $not_available = array($cinq_n, $quatre_n, $trois_n, $deux_n, $un_n);
         //return response($not_available);
         return view('admin.books.show', ['page_title' => 'Informations sur le livre', 'book_reference' => $book, 'a_book' => $a_book, 'books' => $books, 'available' => json_encode($available), 'not_available' => json_encode($not_available)]);
     }

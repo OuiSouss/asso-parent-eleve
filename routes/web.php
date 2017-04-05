@@ -32,11 +32,5 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('configuration', 'ConfigurationController', ['as' => 'admin']);
 
     Route::resource('contribution', 'ContributionController', ['as' => 'admin']);
-});
-
-/**
- * TEST ROUTES
- */
-Route::group(['prefix' => 'test'], function () {
-    Route::get('/', 'TestController@index')->name('test.index');
+    Route::get('books_views/{book_reference}/{availability}/{state}', 'BooksViewsController@show')->name('admin.books_views.show');
 });
