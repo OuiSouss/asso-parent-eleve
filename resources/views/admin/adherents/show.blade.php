@@ -52,37 +52,12 @@
             <div class="box">
                 <div class="box-body">
                     <h4>Commandes</h4>
-                    @foreach ($adherent->orders as $order)
-                        <b>Commande N°{{ $order->id }}</b>
-                        <p>{{ count($order->books) }} livre(s)</p>
-                        <p>Montant : {{ $order->price }} €</p>
-                        @if(!$order->books->isEmpty())
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>ISBN</th>
-                                    <th>Niveau</th>
-                                    <th>Section</th>
-                                    <th>Matière</th>
-                                    <th>État</th>
-                                    <th>Prix</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($order->books as $book)
-                                    <tr>
-                                        <td>{{ $book->book_reference->ISBN }}</td>
-                                        <td>{{ $book->book_reference->level->name }}</td>
-                                        <td>{{ $book->book_reference->section->name }}</td>
-                                        <td>{{ $book->book_reference->subject->name }}</td>
-                                        <td>{{ $book->state }}</td>
-                                        <td>{{ $book->actualised_price }} €</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        @endif
-                    @endforeach
+                    <ul>
+                        @foreach ($adherent->orders as $order)
+                            <li><a href="{{ route('admin.orders.show', $order->id) }}">Commande N°{{ $order->id }}</a>
+                            </li>
+                        @endforeach
+                    </ul>
                     @if ($adherent->orders->isEmpty())
                         <small>Pas de commandes à afficher</small>
                     @endif
