@@ -26,8 +26,9 @@ class ContributionController extends Controller
      */
     public function create()
     {
+        $page_title = "Création d'un niveau de contribution";
         $contribution = new Contribution();
-        return view('admin.configuration.contribution.form', compact('contribution'));
+        return view('admin.configuration.contribution.form', compact('contribution', 'page_title'));
     }
 
     /**
@@ -40,7 +41,7 @@ class ContributionController extends Controller
     {
         $contribution = new Contribution($request->all());
         $contribution->save();
-        return response($contribution);
+        return redirect(route('admin.configuration.index'));
     }
 
     /**
@@ -51,7 +52,7 @@ class ContributionController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('admin.configuration.index');
     }
 
     /**

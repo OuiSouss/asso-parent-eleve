@@ -20,6 +20,12 @@
                     <span>Livres</span>
                 </a>
             </li>
+
+            <li @if (Route::is('admin.configuration.*')) class="active" @endif><a href="{{ route('admin.configuration.index') }}">
+                    <i class="fa fa-gears"></i>
+                    <span>Configuration</span>
+                </a>
+            </li>
         </ul>
     </section>
 </aside>

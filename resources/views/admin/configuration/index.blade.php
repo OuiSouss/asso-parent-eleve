@@ -3,7 +3,7 @@
 @section('content')
     <h4>
         Niveaux d'adhésion
-        <a href="{{ route('admin.contribution.create') }}" class="btn btn-success">
+        <a href="{{ route('admin.configuration.contribution.create') }}" class="btn btn-success">
             <i class="fa fa-plus"></i>
         </a>
     </h4>
@@ -27,7 +27,7 @@
                                     <td>{{ $contribution->name }}</td>
                                     <td>{{ $contribution->cost }}</td>
                                     <td>
-                                    <a href="{{ route('admin.contribution.edit', $contribution->id) }}"
+                                    <a href="{{ route('admin.configuration.contribution.edit', $contribution->id) }}"
                                        class="btn btn-primary"><i class="fa fa-pencil"></i></a>
                                     <a href="#" class="btn btn-danger" data-toggle="modal"
                                        data-target="#modal_contribution_delete" data-id="{{ $contribution->id }}"><i
@@ -51,7 +51,7 @@
             var button = $(event.relatedTarget);
             var contribution_id = button.data('id');
             var modal = $(this);
-            var url = '{{ route('admin.contribution.destroy', ':contribution_id') }}';
+            var url = '{{ route('admin.configuration.contribution.destroy', ':contribution_id') }}';
             url = url.replace(':contribution_id', contribution_id);
             modal.find('.save').on('click', function (event) {
                 $.ajax({

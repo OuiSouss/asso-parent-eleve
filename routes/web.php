@@ -26,12 +26,13 @@ Route::group(['prefix' => 'parent'], function () {
  */
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index')->name('admin.index');
+
     Route::resource('adherents', 'AdherentController', ['as' => 'admin']);
     Route::resource('orders', 'OrderController', ['as' => 'admin']);
     Route::resource('books', 'BooksController', ['as' => 'admin']);
-    Route::resource('configuration', 'ConfigurationController', ['as' => 'admin']);
 
-    Route::resource('contribution', 'ContributionController', ['as' => 'admin']);
+    Route::resource('configuration', 'ConfigurationController', ['as' => 'admin']);
+    Route::resource('configuration/contribution', 'ContributionController', ['as' => 'admin.configuration']);
 });
 
 /**

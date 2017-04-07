@@ -115,15 +115,17 @@ class AdherentController extends Controller
      */
     public function destroy($id)
     {
-        $adherent = Adherent::find($id);
+        $adherent = Adherent::findOrFail($id);
 
-        if (!is_null($adherent)) {
-            $adherent->user->delete();
-            $adherent->delete();
-
-            return response()->json([
-                'status' => 'success',
-            ]);
+        foreach ($adherent->orders as $order) {
+            $order->delete();
         }
+
+        $adherent->user->delete();
+        $adherent->delete();
+
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 }

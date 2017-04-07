@@ -6,9 +6,9 @@
             <div class="box">
                 <div class="box-body">
                     @if (is_null($contribution->id))
-                        {!! Form::model($contribution, ['route' => ['admin.contribution.store'], 'class' => 'form-horizontal', 'method' => 'post']) !!}
+                        {!! Form::model($contribution, ['route' => ['admin.configuration.contribution.store'], 'class' => 'form-horizontal', 'method' => 'post']) !!}
                     @else
-                        {!! Form::model($contribution, ['route' => ['admin.contribution.update', $contribution->id],'class' => 'form-horizontal', 'method' => 'put']) !!}
+                        {!! Form::model($contribution, ['route' => ['admin.configuration.contribution.update', $contribution->id],'class' => 'form-horizontal', 'method' => 'put']) !!}
                     @endif
 
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
