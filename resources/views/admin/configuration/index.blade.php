@@ -25,7 +25,7 @@
                             @foreach($contributions as $contribution)
                                 <tr>
                                     <td>{{ $contribution->name }}</td>
-                                    <td>{{ $contribution->cost }}</td>
+                                    <td>{{ $contribution->cost }} €</td>
                                     <td>
                                     <a href="{{ route('admin.configuration.contribution.edit', $contribution->id) }}"
                                        class="btn btn-primary"><i class="fa fa-pencil"></i></a>
