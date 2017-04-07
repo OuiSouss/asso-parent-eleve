@@ -57,12 +57,12 @@
 
 @section('scripts')
     <script>
-        $('#modal_adherents_delete').on('show.bs.modal', function (event) {
+        $('#modal_books_delete').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
-            var adherent_id = button.data('id');
+            var book_reference_id = button.data('id');
             var modal = $(this);
-            var url = '{{ route('admin.adherents.destroy', ':adherent_id') }}';
-            url = url.replace(':adherent_id', adherent_id);
+            var url = '{{ route('admin.books.destroy', ':book_reference_id') }}';
+            url = url.replace(':book_reference_id', book_reference_id);
             modal.find('.save').on('click', function (event) {
                 $.ajax({
                     url: url,

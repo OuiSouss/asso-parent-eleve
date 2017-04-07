@@ -26,18 +26,11 @@ Route::group(['prefix' => 'parent'], function () {
  */
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index')->name('admin.index');
-
     Route::resource('adherents', 'AdherentController', ['as' => 'admin']);
     Route::resource('orders', 'OrderController', ['as' => 'admin']);
     Route::resource('books', 'BooksController', ['as' => 'admin']);
-
     Route::resource('configuration', 'ConfigurationController', ['as' => 'admin']);
-    Route::resource('configuration/contribution', 'ContributionController', ['as' => 'admin.configuration']);
-});
 
-/**
- * TEST ROUTES
- */
-Route::group(['prefix' => 'test'], function () {
-    Route::get('/', 'TestController@index')->name('test.index');
+    Route::resource('contribution', 'ContributionController', ['as' => 'admin']);
+    Route::get('books_views/{book_reference}/{availability}/{state}', 'BooksViewsController@show')->name('admin.books_views.show');
 });

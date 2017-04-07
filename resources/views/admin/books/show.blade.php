@@ -35,36 +35,67 @@
                         </tr>
                         <tr>
                             <td>Nombre de livres avec cette référence</td>
-                            <td>{{ $a_book  }}</td>
+                            <td>
+                                <span class="badge">{{ $a_book  }}</span>
+                            </td>
                         </tr>
+
 
                     </table>
                 </div>
             </div>
-            <div class="box show">
-                <div class="box-body">
-                    <h4>Livres correspondant à cette référence</h4>
-                    <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Etat</th>
-                                    <th>Available</th>
-                                </tr>
-                            </thead>
-                            @foreach($books as $book)
-                            <tbody>
-                                <tr>
-                                    <td>{{ $book->id }}</td>
-                                    <td>{{ $book->state }}</td>
-                                    <td>{{ $book->available }}</td>
+            
+            <div class="box show" id="histo" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto">
 
-                                </tr>
-                            </tbody>
-                                @endforeach
-                        </table>
-                </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script>
+        Highcharts.chart('histo', {
+            chart: {
+                type: 'bar',
+            },
+            title: {
+                text: 'Etat livres libres/pris'
+            },
+            xAxis: {
+                categories: ['5', '4', '3', '2', '1']
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Nombre de livres'
+                }
+            },
+            legend: {
+                reversed: true
+            },
+            plotOptions: {
+                series: {
+                    stacking: 'normal',
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function () {
+                                location.href = '{{url("admin/books_views/")}}/' + {{$book_reference->id}} + '/' + this.series.name + '/' + this.category ;
+                                //alert('Category: ' + this.category + 'value: ' + this.y);
+                            }
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'Available',
+                data: {{  $available }}
+            }, {
+                name: 'Not_available',
+                data: {{ $not_available }}
+            }]
+        });
+
+    </script>
 @endsection
