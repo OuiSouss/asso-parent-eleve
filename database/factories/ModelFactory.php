@@ -76,7 +76,7 @@ $factory->define(App\Book::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\OrderBook::class, function (Faker\Generator $faker) {
+$factory->define(App\BookOrder::class, function (Faker\Generator $faker) {
     return [
         'state' => $faker->randomDigitNotNull()%5 + 1,
         'order_id' => App\Order::all()->random()->id,

@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     public function getPriceAttribute() {
-
+        $price = 0;
+        foreach ($this->books as $book) {
+            $price += $book->actualised_price;
+        }
+        return $price;
     }
 
     public function adherent() {
@@ -15,6 +19,6 @@ class Order extends Model
     }
 
     public function books() {
-        return $this->hasMany('App\Book');
+        return $this->belongsToMany('App\Book');
     }
 }

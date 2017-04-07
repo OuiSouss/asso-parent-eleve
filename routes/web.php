@@ -31,6 +31,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('books', 'BooksController', ['as' => 'admin']);
     Route::resource('configuration', 'ConfigurationController', ['as' => 'admin']);
 
-    Route::resource('contribution', 'ContributionController', ['as' => 'admin']);
+    Route::resource('contribution', 'ContributionController', ['as' => 'admin.configuration']);
     Route::get('books_views/{book_reference}/{availability}/{state}', 'BooksViewsController@show')->name('admin.books_views.show');
 });

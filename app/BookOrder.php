@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrderBook extends Model
+class BookOrder extends Model
 {
-    //
+    protected $table = "book_order";
 }
