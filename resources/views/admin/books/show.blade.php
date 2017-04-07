@@ -44,30 +44,7 @@
                     </table>
                 </div>
             </div>
-            <div class="box show">
-                <div class="box-body">
-                    <h4>Livres correspondant à cette référence</h4>
-                    <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Etat</th>
-                                    <th>Available</th>
-                                </tr>
-                            </thead>
-                            @foreach($books as $book)
-                            <tbody>
-                                <tr>
-                                    <td>{{ $book->id }}</td>
-                                    <td>{{ $book->state }}</td>
-                                    <td>{{ $book->available }}</td>
-
-                                </tr>
-                            </tbody>
-                                @endforeach
-                        </table>
-                </div>
-            </div>
+            
             <div class="box show" id="histo" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto">
 
             </div>
