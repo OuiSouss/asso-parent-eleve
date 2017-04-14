@@ -18,11 +18,11 @@ class CreateBookReferencesTable extends Migration
             $table->float('initial_price');
             $table->string('ISBN');
             $table->unsignedInteger('section_id');
-            $table->foreign('section_id')->references('id')->on('section')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedInteger('level_id');
-            $table->foreign('level_id')->references('id')->on('level')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('level_id')->references('id')->on('levels')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedInteger('subject_id');
-            $table->foreign('subject_id')->references('id')->on('subject')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
         });
     }
