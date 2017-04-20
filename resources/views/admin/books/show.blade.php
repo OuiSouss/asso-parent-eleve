@@ -8,7 +8,7 @@
 
 @section('content')
     <div class='row'>
-        <div class='col-md-12'>
+        <div class='col-md-6'>
             <!-- Box -->
             <div class="box show">
                 <div class="box-body">
@@ -23,15 +23,33 @@
                         </tr>
                         <tr>
                             <td>Section</td>
-                            <td>{{ $book_reference->section->name }}</td>
+                            <td>
+                                @if(is_null($book_reference->section))
+                                    N/A
+                                @else
+                                    {{ $book_reference->section->name }}
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td>Niveau </td>
-                            <td> {{ $book_reference->level->name }}</td>
+                            <td>
+                                @if(is_null($book_reference->level))
+                                    N/A
+                                @else
+                                    {{ $book_reference->level->name }}
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td>Matière</td>
-                            <td>{{ $book_reference->subject->name }}</td>
+                            <td>
+                                @if(is_null($book_reference->subject))
+                                    N/A
+                                @else
+                                    {{ $book_reference->subject->name }}
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td>Nombre de livres avec cette référence</td>
@@ -44,8 +62,14 @@
                     </table>
                 </div>
             </div>
-            
-            <div class="box show" id="histo" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto">
+        </div>
+        <div class="col-md-6" >
+            <div class="box show" id="histo">
+
+            </div>
+        </div>
+        <div class="col-md-12" >
+            <div class="box show"  >
 
             </div>
         </div>
@@ -81,7 +105,14 @@
                     point: {
                         events: {
                             click: function () {
-                                location.href = '{{url("admin/books_views/")}}/' + {{$book_reference->id}} + '/' + this.series.name + '/' + this.category ;
+                                if (this.series.name.localeCompare("Available") === 0)
+                                {
+                                    location.href = '{{url("admin/books_views/")}}/' + {{$book_reference->id}} + '/1/' + this.category ;
+                                }
+                                else
+                                {
+                                    location.href = '{{url("admin/books_views/")}}/' + {{$book_reference->id}} + '/0/' + this.category ;
+                                }
                                 //alert('Category: ' + this.category + 'value: ' + this.y);
                             }
                         }

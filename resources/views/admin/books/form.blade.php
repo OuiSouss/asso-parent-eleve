@@ -15,7 +15,7 @@
                         {!! Form::label('ISBN', 'ISBN', ['class' => 'col-md-2 control-label']) !!}
 
                         <div class="col-md-3">
-                            {!! Form::text('ISBN', !is_null($book_reference->id) ? $book_reference->ISBN : null, ['class' => 'form-control', 'placeholder' => 'ISBN']) !!}
+                            {!! Form::text('ISBN', !is_null($book_reference->id) ? $book_reference->ISBN : null, ['class' => 'form-control', 'placeholder' => '979-2-2156-3255-4']) !!}
 
                             @if ($errors->has('ISBN'))
                                 <span class="help-block">
@@ -24,60 +24,78 @@
                             @endif
                         </div>
                     </div>
+
                         <div class="form-group{{ $errors->has('initial_price') ? ' has-error' : '' }}">
                             {!! Form::label('initial_price', 'Prix initial', ['class' => 'col-md-2 control-label']) !!}
 
                             <div class="col-md-3">
-                                <input class="form-control" placeholder="Prix initial" type="number" name="initial_price" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" title="This should be a number with up to 2 decimal places." value="{{ isset($book_reference->id) ? $book_reference->initial_price : '0.00' }}" >
+                                {!! Form::text('initial_price', !is_null($book_reference->id) ? $book_reference->initial_price : 0, ['class' => 'form-control', 'placeholder' => 'Prix Initial']) !!}
                                 @if ($errors->has('initial_price'))
                                     <span class="help-block">
-                                    <strong>{{ $errors->first('initial_price') }}</strong>
-                                </span>
+                                        <strong>{{ $errors->first('initial_price') }}</strong>
+                                    </span>
                                 @endif
 
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('section_name') ? ' has-error' : '' }}">
-                            {!! Form::label('section_name', 'Section', ['class' => 'col-md-2 control-label']) !!}
+                        <div class="form-group{{ $errors->has('section_id') ? ' has-error' : '' }}">
+                            {!! Form::label('section_id', 'Section', ['class' => 'col-md-2 control-label']) !!}
 
-                            <div class="col-md-3">
-                                {!! Form::text('section_name',!is_null($book_reference->id) ? $book_reference->section->name : null, ['class' => 'form-control', 'placeholder' => 'Section']) !!}
+                            <div class="col-md-10">
+                                {!! Form::select('section_id', $sections, null, ['class' => 'form-control', 'select' => $book_reference->section_id ]) !!}
 
-                                @if ($errors->has('section_name'))
+                                @if ($errors->has('section_id'))
                                     <span class="help-block">
-                                    <strong>{{ $errors->first('section_name') }}</strong>
-                                </span>
+                                        <strong>{{ $errors->first('section_id') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('level_name') ? ' has-error' : '' }}">
-                            {!! Form::label('level_name', 'Niveau', ['class' => 'col-md-2 control-label']) !!}
+                        <div class="form-group{{ $errors->has('level_id') ? ' has-error' : '' }}">
+                            {!! Form::label('level_id', 'Niveau', ['class' => 'col-md-2 control-label']) !!}
 
-                            <div class="col-md-3">
-                                {!! Form::text('level_name',!is_null($book_reference->id) ? $book_reference->level->name : null, ['class' => 'form-control', 'placeholder' => 'Niveau']) !!}
+                            <div class="col-md-10">
+                                {!! Form::select('level_id', $levels, null, ['class' => 'form-control', 'select' => $book_reference->level_id ]) !!}
 
-                                @if ($errors->has('level_name'))
+                                @if ($errors->has('level_id'))
                                     <span class="help-block">
-                                    <strong>{{ $errors->first('level_name') }}</strong>
-                                </span>
+                                        <strong>{{ $errors->first('level_id') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('subject_id') ? ' has-error' : '' }}">
+                            {!! Form::label('subject_id', 'Matière', ['class' => 'col-md-2 control-label']) !!}
 
-                        <div class="form-group{{ $errors->has('subject_name') ? ' has-error' : '' }}">
-                            {!! Form::label('subject_name', 'Matière', ['class' => 'col-md-2 control-label']) !!}
+                            <div class="col-md-10">
+                                {!! Form::select('subject_id', $subjects, null, ['class' => 'form-control', 'select' => $book_reference->subject_id ]) !!}
 
-                            <div class="col-md-3">
-                                {!! Form::text('subject_name',!is_null($book_reference->id) ? $book_reference->subject->name : null, ['class' => 'form-control', 'placeholder' => 'Matière']) !!}
-
-                                @if ($errors->has('subject_name'))
+                                @if ($errors->has('subject_id'))
                                     <span class="help-block">
-                                    <strong>{{ $errors->first('subject_name') }}</strong>
-                                </span>
+                                        <strong>{{ $errors->first('subject_id') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                         </div>
+                        @if (is_null($book_reference->id))
+                            <div class="form-group{{ $errors->has('number_books') ? ' has-error' : '' }}">
+                                {!! Form::label('number_books', 'Nombres de livres à créer', ['class' => 'col-md-2 control-label']) !!}
+
+                                <div class="col-md-10">
+                                    {!! Form::number('number_books', 0, ['class' => 'form-control']) !!}
+
+                                    @if ($errors->has('number_books'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('number_books') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
+
+
+
 
 
                 </div>

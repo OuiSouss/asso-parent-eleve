@@ -53,8 +53,8 @@ $factory->define(App\Section::class, function (Faker\Generator $faker) {
 
 $factory->define(App\BookReference::class, function (Faker\Generator $faker) {
     return [
-        'initial_price' => $faker->numberBetween(1, 100),
-        'ISBN' => $faker->isbn10,
+        'initial_price' => $faker->randomFloat(2, 0, 1000),
+        'ISBN' => $faker->isbn13,
         'section_id' => App\Section::all()->random()->id,
         'level_id' => App\Level::all()->random()->id,
         'subject_id' => App\Subject::all()->random()->id,

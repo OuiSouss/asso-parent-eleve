@@ -8,6 +8,7 @@ use App\Level;
 use App\Section;
 use App\Subject;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreBookReference extends FormRequest
 {
@@ -28,38 +29,46 @@ class StoreBookReference extends FormRequest
      */
     public function rules()
     {
-        $isbn = BookReference::where('ISBN', $this->get('ISBN'))->first();
+        /*$id = $this->get('id');
+        $isbn_rule = 'required|max:17|regex:/[0-9]{3}\-[0-9]\-[0-9]{4}\-[0-9]{4}\-[0-9]/|unique:book_references,ISBN,NULL,id';
+        if ($this->method() == "PUT")
+        {
+            $isbn_rule = 'required|max:17|regex:/[0-9]{3}\-[0-9]\-[0-9]{4}\-[0-9]{4}\-[0-9]/|unique:book_references,ISBN,'. $id .',id';
+        }
+        */
+        if ($this->method() == 'PUT')
+        {
+            return [
+                'initial_price' => 'required|regex:/^\d*(\.\d{2})?$/|min:0|max:1000',
+                'ISBN' => 'required|max:17|regex:/[0-9]{3}\-[0-9]\-[0-9]{4}\-[0-9]{4}\-[0-9]/',
+                'section_id' => 'required',
+                'level_id' => 'required',
+                'subject_id' => 'required',
+            ];
 
-        $section = Section::where('name', $this->get('name'))->first();
-        $level = Level::where('name', $this->get('name'))->first();
-        $subject = Subject::where('name', $this->get('name'))->first();
-
-        $isbn_rule = 'required|max:17|unique:book_references,ISBN';
-        $section_rule = 'required|max:255';
-        $level_rule = 'required|max:255';
-        $subject_rule = 'required|max:255';
-
-        if (isset($isbn->id))
-            $isbn_rule .= ',\'' . $isbn->id;
-
-        if (isset($section->id))
-            $section_rule .= ',\'' . $section->id;
-
-        if (isset($level->id))
-            $level_rule .= ',\'' . $level->id;
-        if(isset($subject->id))
-            $subject_rule .= ',\'' . $subject->id;
-
+        }
         return [
-            'ISBN' => $isbn_rule,
-            'initial_price' => 'required|regex:/[0-9]+([.][0-9]+)?/',
+            'initial_price' => 'required|regex:/^\d*(\.\d{2})?$/|min:0|max:1000',
+            'ISBN' => 'required|max:17|regex:/[0-9]{3}\-[0-9]\-[0-9]{4}\-[0-9]{4}\-[0-9]/',
             'section_id' => 'required',
             'level_id' => 'required',
             'subject_id' => 'required',
-            'section_name' => $section_rule,
-            'level_name' => $level_rule,
-            'subject_name' => $subject_rule,
+            'number_books' => 'required|integer|min:0|max:5000',
         ];
 
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'initial_price.regex' => 'Inscrivez un prix avec cette normalisation : 10.50  ',
+            'ISBN.regex' => 'L\' isbn doit respecté ce format : 979-1-2135-2156-5',
+            'number_books.max' => 'Votre nombre est un peu trop grand. Le max est fixé à 5000',
+        ];
     }
 }

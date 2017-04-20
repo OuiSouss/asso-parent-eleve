@@ -1,4 +1,4 @@
-<div class="modal modal-danger" id="modal_contribution_delete">
+<div class="modal modal-danger" id="modal_section_delete">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

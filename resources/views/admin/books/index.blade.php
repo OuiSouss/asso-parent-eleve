@@ -29,9 +29,27 @@
                         @foreach ($book_references as $book_reference)
                             <tr>
                                 <td>{{ $book_reference->id }}</td>
-                                <td>{{ $book_reference->section->name }}</td>
-                                <td>{{ $book_reference->level->name }}</td>
-                                <td>{{ $book_reference->subject->name }}</td>
+                                <td>
+                                    @if(is_null($book_reference->section))
+                                        N/A
+                                    @else
+                                        {{ $book_reference->section->name }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(is_null($book_reference->level))
+                                        N/A
+                                    @else
+                                        {{ $book_reference->level->name }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(is_null($book_reference->subject))
+                                        N/A
+                                    @else
+                                        {{ $book_reference->subject->name }}
+                                    @endif
+                                </td>
                                 <td>{{ $book_reference->initial_price }}</td>
                                 <td>{{ $book_reference->ISBN }}</td>
                                 <td>

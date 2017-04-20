@@ -22,13 +22,28 @@ class BooksViewsController extends Controller
      */
     public function show(BookReference $book_reference, $availability, $state)
     {
-        $available = 0;
-        if ( strcmp($availability, 'Available') == 0)
-            $available = 1;
         $books = Book::where('book_reference_id', $book_reference->id)->get();
-        $books = $books->where('available', $available)->where('state', $state);
+        $books = $books->where('available', $availability)->where('state', $state);
         //return response($books);
-        return view('admin.books_views.show', ['page_title' => 'Information complémentaire à l\'histogramme', 'book_reference' => $book_reference, 'books' => $books]);
+        return view('admin.books_views.show', ['page_title' => 'Information complémentaire à l\'histogramme', 'book_reference' => $book_reference, 'books' => $books, 'availability' => $availability, 'state' => $state]);
+    }
 
+    public function destroy(BookReference $book_reference, $availability, $state )
+    {
+        if ( $availability == 0)
+            return response()->json([
+                'status' => 'impossible',
+            ]);
+
+        $books = Book::where('book_reference_id', $book_reference->id)->get();
+        $books = $books->where('available', $availability)->where('state', $state);
+
+        foreach ($books as $book)
+        {
+            $book->delete();
+        }
+        return response()->json([
+        'status' => 'success',
+        ]);
     }
 }

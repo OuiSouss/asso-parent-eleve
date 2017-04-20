@@ -7,7 +7,6 @@ use App\Book;
 use App\BookReference;
 use App\Http\Requests\StoreBookReference;
 use App\Level;
-use App\OrderBook;
 use App\Section;
 use App\Subject;
 use function MongoDB\BSON\toJSON;
@@ -54,22 +53,24 @@ class BooksController extends Controller
      */
     public function store(StoreBookReference $request)
     {
-        $isbn = $request->get('ISBN');
-        //$init_price = $request->get('initial_price');
+        $section_id = $request->get('section_id') + 1 ;
+        $level_id = $request->get('level_id') + 1;
+        $subject_id = $request->get('subject_id') + 1;
+        $nb_books = $request->get('number_books');
 
-        $n_section = $request->get('section_name');
-        $section = Section::create(['name' =>$n_section]);
-
-        $n_level = $request->get('level_name');
-        $level = Level::create(['name' => $n_level]);
-
-        $n_subject = $request->get('subject_name');
-        $subject = Subject::create(['name' => $n_subject]);
-
-        $request->replace($request->except('ISBN', 'section_name', 'level_name', 'subject_name'));
-        $request->merge(['ISBN' => $isbn, 'section_id' => $section->id, 'level_id' => $level->id, 'subject_id' => $subject->id]);
-
+        $request->replace($request->except('section_id', 'level_id', 'subject_id', 'number_books'));
+        $request->merge(['section_id' => $section_id , 'level_id' => $level_id , 'subject_id' => $subject_id]);
         $book_reference = BookReference::create($request->all());
+
+        if ($nb_books > 0)
+        {
+            for ($i = 1; $i <= $nb_books; ++$i)
+            {
+                $book = Book::create(['state' => 1, 'available' => true, 'book_reference_id' => $book_reference->id]);
+                $book->save();
+            }
+        }
+
         return redirect()->route('admin.books.show', $book_reference);
     }
 
@@ -108,9 +109,12 @@ class BooksController extends Controller
      */
     public function edit($id)
     {
-        $book_reference = BookReference::find($id);
+        $book_reference = BookReference::findOrFail($id);
+        $sections = Section::all();
+        $levels = Level::all();
+        $subjects = Subject::all();
         //return response($book_reference);
-        return view('admin.books.form', ['page_title' => 'Nouveau livre', 'book_reference' => $book_reference]);
+        return view('admin.books.form', ['page_title' => 'Nouveau livre', 'book_reference' => $book_reference, 'sections' => $sections, 'levels' => $levels, 'subjects' => $subjects]);
     }
 
     /**
@@ -122,24 +126,16 @@ class BooksController extends Controller
      */
     public function update(StoreBookReference $request, $id)
     {
+        $book_reference = BookReference::findOrFail($id);
 
-        $book_reference = BookReference::find($id);
+        $section_id = $request->get('section_id') + 1 ;
+        $level_id = $request->get('level_id') + 1;
+        $subject_id = $request->get('subject_id') + 1;
 
-        $section = Section::find($book_reference->section_id);
-        $level = Level::find($book_reference->level_id);
-        $subject = Subject::find($book_reference->subject_id);
+        $request->replace($request->except('section_id', 'level_id', 'subject_id'));
+        $request->merge(['section_id' => $section_id , 'level_id' => $level_id , 'subject_id' => $subject_id]);
 
-        $book_reference->update($request->except('ISBN','section','level', 'subject'));
-        $isbn = ['ISBN' => $request->get('ISBN')];
-        $n_section = ['name' => $request->get('section_name')];
-        $n_level = ['name' => $request->get('level_name')];
-        $n_subject = ['name' => $request->get('subject_name')];
-
-        $book_reference->update($isbn);
-        $section->update($n_section);
-        $level->update($n_level);
-        $subject->update($n_subject);
-
+        $book_reference->update($request->all());
         return redirect()->route('admin.books.show', $book_reference);
     }
 
@@ -152,51 +148,34 @@ class BooksController extends Controller
     public function destroy($id)
     {
 
-        $book_reference = BookReference::find($id);
+        $book_reference = BookReference::findOrFail($id);
 
-        if (!is_null($book_reference))
+        $books = Book::where('book_reference_id', $book_reference->id )->get();
+        $nb_books = 0;
+        if ($books->count() != 0)
         {
-            $books = Book::where('book_reference_id', $book_reference->id )->get();
-            if ($books->count() != 0)
+            foreach ($books as $book)
             {
-                $books_orders = [];
-                foreach ($books as $book)
+                if ($book->available == 1)
                 {
-                    $books_orders = OrderBook::where('book_id', $book->id)->get();
-                }
-                if ($books_orders->count() != 0)
-                {
-                    foreach ($books as $book)
-                    {
-                        if (! in_array($book, $books_orders))
-                        {
-                            $book->delete();
+                    $book->delete();
+                    $nb_books += 1;
 
-                        }
-                    }
-                    return response()->json([
-                        'status' => 'not totally complete',
-                    ]);
                 }
-                else
-                {
-                    foreach ($books as $book)
-                    {
-                        $book->delete();
-                    }
-                }
+
             }
-
-            //$book_reference->section->delete();
-            //$book_reference->level->delete();
-            //$book_reference->subject->delete();
-
-
-            $book_reference->delete();
-
-            return response()->json([
-                'status' => 'success',
-            ]);
         }
+        if ($nb_books != $books->count())
+        {
+            return response()->json([
+                'status' => 'warning',
+            ]);
+
+        }
+        $book_reference->delete();
+
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 }

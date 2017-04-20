@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Contribution;
+use App\Http\Requests\SubjectRequest;
+use App\Subject;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 
-class ConfigurationController extends Controller
+class SubjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +15,8 @@ class ConfigurationController extends Controller
      */
     public function index()
     {
-        $page_title = 'Configuration';
-        $contributions = json_decode(app('App\Http\Controllers\ContributionController')->index()->getContent());
-        $sections = json_decode(app('App\Http\Controllers\SectionController')->index()->getContent());
-        $levels = json_decode(app ('App\Http\Controllers\LevelController')->index()->getContent());
-        $subjects = json_decode(app('App\Http\Controllers\SubjectController')->index()->getContent());
-        return view('admin.configuration.index', compact('page_title', 'contributions', 'sections', 'levels', 'subjects'));
+        $subjects = Subject::all();
+        return response()->json($subjects);
     }
 
     /**
@@ -30,7 +26,9 @@ class ConfigurationController extends Controller
      */
     public function create()
     {
-        return redirect()->route('admin.configuration.index');
+        $page_title = "Création d'une matière";
+        $subject = new Subject();
+        return view('admin.configuration.subject.form', compact('subject', 'page_title'));
     }
 
     /**
@@ -39,11 +37,11 @@ class ConfigurationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SubjectRequest $request)
     {
-        $contribution = new Contribution($request->all());
-        $contribution->save();
-        return response($contribution);
+        $subject = new Subject($request->all());
+        $subject->save();
+        return redirect(route('admin.configuration.index'));
     }
 
     /**
@@ -54,7 +52,7 @@ class ConfigurationController extends Controller
      */
     public function show($id)
     {
-        return redirect()->route('admin.configuration.index');
+        return view('admin.configuration.index');
     }
 
     /**
@@ -65,7 +63,8 @@ class ConfigurationController extends Controller
      */
     public function edit($id)
     {
-        return redirect()->route('admin.configuration.index');
+        $subject = Subject::findOrFail($id);
+        return view('admin.configuration.subject.form', compact('subject'));
     }
 
     /**
@@ -75,9 +74,11 @@ class ConfigurationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SubjectRequest $request, $id)
     {
-        return redirect()->route('admin.configuration.index');
+        $subject = Subject::findOrFail($id);
+        $subject->update($request->all());
+        return redirect(route('admin.configuration.index'));
     }
 
     /**
@@ -88,6 +89,8 @@ class ConfigurationController extends Controller
      */
     public function destroy($id)
     {
-        return redirect()->route('admin.configuration.index');
+        $subject = Subject::findOrFail($id);
+        $subject->delete();
+        return response(200);
     }
 }

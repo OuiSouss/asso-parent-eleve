@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Contribution;
+use App\Http\Requests\LevelRequest;
+use App\Level;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 
-class ConfigurationController extends Controller
+class LevelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +15,8 @@ class ConfigurationController extends Controller
      */
     public function index()
     {
-        $page_title = 'Configuration';
-        $contributions = json_decode(app('App\Http\Controllers\ContributionController')->index()->getContent());
-        $sections = json_decode(app('App\Http\Controllers\SectionController')->index()->getContent());
-        $levels = json_decode(app ('App\Http\Controllers\LevelController')->index()->getContent());
-        $subjects = json_decode(app('App\Http\Controllers\SubjectController')->index()->getContent());
-        return view('admin.configuration.index', compact('page_title', 'contributions', 'sections', 'levels', 'subjects'));
+        $levels = Level::all();
+        return response()->json($levels);
     }
 
     /**
@@ -30,7 +26,9 @@ class ConfigurationController extends Controller
      */
     public function create()
     {
-        return redirect()->route('admin.configuration.index');
+        $page_title = "Création d'un niveau";
+        $level = new Level();
+        return view('admin.configuration.level.form', compact('level', 'page_title'));
     }
 
     /**
@@ -39,11 +37,11 @@ class ConfigurationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(LevelRequest $request)
     {
-        $contribution = new Contribution($request->all());
-        $contribution->save();
-        return response($contribution);
+        $level = new Level($request->all());
+        $level->save();
+        return redirect(route('admin.configuration.index'));
     }
 
     /**
@@ -54,7 +52,8 @@ class ConfigurationController extends Controller
      */
     public function show($id)
     {
-        return redirect()->route('admin.configuration.index');
+        return view('admin.configuration.index');
+
     }
 
     /**
@@ -65,7 +64,8 @@ class ConfigurationController extends Controller
      */
     public function edit($id)
     {
-        return redirect()->route('admin.configuration.index');
+        $level = Level::findOrFail($id);
+        return view('admin.configuration.level.form', compact('level'));
     }
 
     /**
@@ -75,9 +75,11 @@ class ConfigurationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(LevelRequest $request, $id)
     {
-        return redirect()->route('admin.configuration.index');
+        $level = Level::findOrFail($id);
+        $level->update($request->all());
+        return redirect(route('admin.configuration.index'));
     }
 
     /**
@@ -88,6 +90,8 @@ class ConfigurationController extends Controller
      */
     public function destroy($id)
     {
-        return redirect()->route('admin.configuration.index');
+        $level = Level::findOrFail($id);
+        $level->delete();
+        return response(200);
     }
 }
