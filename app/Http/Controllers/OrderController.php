@@ -28,7 +28,8 @@ class OrderController extends Controller
     public function create()
     {
         $order = new Order();
-        return view('admin.orders.form', ['page_title' => 'Nouvelle commande', 'order' => $order]);
+        $adherents = Adherent::all();
+        return view('admin.orders.form', ['page_title' => 'Nouvelle commande', 'order' => $order, 'adherents' => $adherents]);
     }
 
     /**

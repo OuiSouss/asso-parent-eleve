@@ -19,7 +19,6 @@
                             <th>Payée</th>
                             <th>Adhérent</th>
                             <th>Passée le</th>
-                            <th>Date mise à jour</th>
                             <th>Action</th>
                         </tr>
                         <thead>
@@ -41,13 +40,12 @@
                                         @endif
                                     @endforeach
                                 </td>
-                                <td>{{ $order->created_at }}</td>
-                                <td>{{ $order->updated_at }}</td>
+                                <td>{{ $order->created_at->format('d/m/Y') }} à {{ $order->created_at->format('H') }}h{{ $order->created_at->format('m') }}</td>
                                 <td>
                                     <a href="{{ route('admin.orders.show', $order->id) }}"
                                        class="btn btn-primary"><i class="fa fa-info-circle"></i></a>
                                     <a href="#" class="btn btn-danger" data-toggle="modal"
-                                       data-target="#modal_adherents_delete" data-id="{{ $order->id }}"><i
+                                       data-target="#modal_orders_delete" data-id="{{ $order->id }}"><i
                                                 class="fa fa-remove"></i></a>
                                 </td>
                             </tr>
@@ -60,11 +58,11 @@
     </div><!-- /.col -->
 @endsection
 
-@include('admin.modals.adherents_delete')
+@include('admin.modals.orders_delete')
 
 @section('scripts')
     <script>
-        $('#modal_adherents_delete').on('show.bs.modal', function (event) {
+        $('#modal_orders_delete').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var adherent_id = button.data('id');
             var modal = $(this);

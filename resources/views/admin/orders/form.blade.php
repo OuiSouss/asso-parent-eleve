@@ -11,29 +11,15 @@
                         {!! Form::model($order, ['route' => ['admin.orders.update', $order->id],'class' => 'form-horizontal', 'method' => 'put']) !!}
                     @endif
 
-                    <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
-                        {!! Form::label('first_name', 'Prénom Adhérent', ['class' => 'col-md-2 control-label']) !!}
+                    <div class="form-group{{ $errors->has('adherent_id') ? ' has-error' : '' }}">
+                        {!! Form::label('adherent_id', 'Adherent', ['class' => 'col-md-2 control-label']) !!}
 
                         <div class="col-md-10">
-                            {!! Form::text('first_name', null, ['class' => 'form-control', 'placeholder' => 'Prénom']) !!}
+                            {!! Form::select('adherent_id', $adherents, null, ['class' => 'form-control', 'select' => $order->adherent_id]) !!}
 
-                            @if ($errors->has('first_name'))
+                            @if ($errors->has('adherent_id'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('first_name') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
-                        {!! Form::label('first_name', 'Nom Adhérent', ['class' => 'col-md-2 control-label']) !!}
-
-                        <div class="col-md-10">
-                            {!! Form::text('last_name', null, ['class' => 'form-control', 'placeholder' => 'Nom']) !!}
-
-                            @if ($errors->has('last_name'))
-                                <span class="help-block">
-                                        <strong>{{ $errors->first('last_name') }}</strong>
+                                        <strong>{{ $errors->first('adherent_id') }}</strong>
                                     </span>
                             @endif
                         </div>
