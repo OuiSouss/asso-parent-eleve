@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Book extends Model
 {
@@ -26,5 +27,18 @@ class Book extends Model
 
     public function book_reference() {
         return $this->belongsTo('App\BookReference');
+    }
+
+    public static function getAvailableBooksList() {
+        $book_references = BookReference::all();
+
+        $available_books = new Collection();
+
+        foreach ($book_references as $book_reference) {
+            if ($book_reference->available_books_amount > 0)
+                $available_books->push($book_reference);
+        }
+
+        return $available_books;
     }
 }

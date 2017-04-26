@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Adherent;
+use App\Book;
+use App\BookReference;
 use App\Order;
 use Illuminate\Http\Request;
 
@@ -29,7 +31,8 @@ class OrderController extends Controller
     {
         $order = new Order();
         $adherents = Adherent::all();
-        return view('admin.orders.form', ['page_title' => 'Nouvelle commande', 'order' => $order, 'adherents' => $adherents]);
+        $available_books_amount = Book::getAvailableBooksList();
+        return view('admin.orders.form', ['page_title' => 'Nouvelle commande', 'order' => $order, 'adherents' => $adherents, 'available_books_amount' => $available_books_amount]);
     }
 
     /**

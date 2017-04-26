@@ -23,4 +23,8 @@ class BookReference extends Model
     public function book(){
         return $this->hasMany('App\Book');
     }
+
+    public function getAvailableBooksAmountAttribute() {
+        return Book::where('book_reference_id', '=', $this->id)->where('available', '=', 1)->count();
+    }
 }
