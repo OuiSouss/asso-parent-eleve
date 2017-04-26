@@ -14,6 +14,6 @@ class GuestController extends Controller
 
     public function index() {
         $user = Auth::user();
-        return view('welcome', ['user' => $user]);
+        return redirect()->route('login');
     }
 }
