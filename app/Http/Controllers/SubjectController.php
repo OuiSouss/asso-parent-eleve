@@ -64,7 +64,8 @@ class SubjectController extends Controller
     public function edit($id)
     {
         $subject = Subject::findOrFail($id);
-        return view('admin.configuration.subject.form', compact('subject'));
+        $page_title = "Edition d'une matière";
+        return view('admin.configuration.subject.form', compact('subject', 'page_title'));
     }
 
     /**

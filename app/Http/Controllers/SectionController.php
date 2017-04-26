@@ -64,7 +64,8 @@ class SectionController extends Controller
     public function edit($id)
     {
         $section = Section::findOrFail($id);
-        return view('admin.configuration.section.form', compact('section'));
+        $page_title = "Edition d'une section";
+        return view('admin.configuration.section.form', compact('section', 'page_title'));
     }
 
     /**

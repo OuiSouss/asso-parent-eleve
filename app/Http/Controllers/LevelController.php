@@ -65,7 +65,8 @@ class LevelController extends Controller
     public function edit($id)
     {
         $level = Level::findOrFail($id);
-        return view('admin.configuration.level.form', compact('level'));
+        $page_title = "Edition d'un niveau";
+        return view('admin.configuration.level.form', compact('level', 'page_title'));
     }
 
     /**
