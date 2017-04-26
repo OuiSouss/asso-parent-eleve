@@ -68,11 +68,7 @@
 
             </div>
         </div>
-        <div class="col-md-12" >
-            <div class="box show"  >
 
-            </div>
-        </div>
     </div>
 @endsection
 
