@@ -43,7 +43,7 @@
                             {!! Form::label('section_id', 'Section', ['class' => 'col-md-2 control-label']) !!}
 
                             <div class="col-md-10">
-                                {!! Form::select('section_id', $sections, null, ['class' => 'form-control', 'select' => $book_reference->section_id ]) !!}
+                                {!! Form::select('section_id', $sections, $book_reference->section_id, ['class' => 'form-control', 'select' => $book_reference->section_id ]) !!}
 
                                 @if ($errors->has('section_id'))
                                     <span class="help-block">
