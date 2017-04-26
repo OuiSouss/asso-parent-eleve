@@ -4,6 +4,12 @@
     <div class='row show'>
         <div class='col-md-12'>
             <div class="box">
+                <ul>
+                @foreach($available_books_amount as $book)
+                    <li> {{ ($book) }} </li>
+                @endforeach
+                </ul>
+
                 <div class="box-body">
                     @if (is_null($order->id))
                         {!! Form::model($order, ['route' => ['admin.orders.store'], 'class' => 'form-horizontal', 'method' => 'post']) !!}

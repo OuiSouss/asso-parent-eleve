@@ -114,7 +114,7 @@ class BooksController extends Controller
         $levels = Level::all();
         $subjects = Subject::all();
         //return response($book_reference);
-        return view('admin.books.form', ['page_title' => 'Nouveau livre', 'book_reference' => $book_reference, 'sections' => $sections, 'levels' => $levels, 'subjects' => $subjects]);
+        return view('admin.books.form', ['page_title' => 'Édition du livre', 'book_reference' => $book_reference, 'sections' => $sections, 'levels' => $levels, 'subjects' => $subjects]);
     }
 
     /**

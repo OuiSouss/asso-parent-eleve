@@ -15,7 +15,7 @@
                         {!! Form::label('ISBN', 'ISBN', ['class' => 'col-md-2 control-label']) !!}
 
                         <div class="col-md-3">
-                            {!! Form::text('ISBN', !is_null($book_reference->id) ? $book_reference->ISBN : null, ['class' => 'form-control', 'placeholder' => '979-2-2156-3255-4']) !!}
+                            {!! Form::text('ISBN', !is_null($book_reference->id) ? $book_reference->ISBN : null, ['class' => 'form-control', 'placeholder' => '979-2-2156-3255-4', !is_null($book_reference->id) ? 'readonly' : null]) !!}
 
                             @if ($errors->has('ISBN'))
                                 <span class="help-block">
