@@ -21,7 +21,7 @@ class Book extends Model
     }
 
     public function order() {
-        return $this->belongsTo('App\Order');
+        return $this->belongsToMany('App\Order');
     }
 
     public function book_reference() {

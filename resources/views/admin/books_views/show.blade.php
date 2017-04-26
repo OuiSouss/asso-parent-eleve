@@ -21,7 +21,6 @@
                             <th style="width: 10px">#</th>
                             <th>Etat</th>
                             <th>Disponibilité</th>
-                            <th>URL</th>
                         </tr>
                         <thead>
 
@@ -30,8 +29,13 @@
                             <tr>
                                 <td>{{ $book->id }}</td>
                                 <td>{{ $book->state }}</td>
-                                <td>{{ $book->available }}</td>
-                                <td> {{$availability}}</td>
+                                <td>
+                                    @if ($availability == 1)
+                                        <span class="badge badge-pill badge-default">Oui</span>
+                                    @else
+                                    <span class="badge badge-pill badge-default">Non</span>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -67,6 +71,7 @@
                     </table>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
