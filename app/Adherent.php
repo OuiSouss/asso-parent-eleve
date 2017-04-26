@@ -10,6 +10,11 @@ class Adherent extends Model
 {
     protected $guarded = [];
 
+    public function __toString()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
     public function getActiveAccountAttribute() {
         return true;
     }

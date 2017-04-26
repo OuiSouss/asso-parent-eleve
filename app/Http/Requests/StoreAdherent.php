@@ -27,8 +27,8 @@ class StoreAdherent extends FormRequest
         $user = User::where('email', $this->get('email'))->first();
 
         $email_rule = 'required|email|unique:users,email';
-        if (isset($user->id))
-            $email_rule .= ',\'' . $user->id;
+        if ($this->isMethod('put'))
+            $email_rule .= ',' . $user->id;
 
         return [
             'first_name' => 'required',
