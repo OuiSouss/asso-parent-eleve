@@ -34,7 +34,7 @@ class AdherentController extends Controller
     public function create()
     {
         $adherent = new Adherent();
-        $contributions = Contribution::all();
+        $contributions = Contribution::pluck('name', 'id');
         return view('admin.adherents.form', ['page_title' => 'Nouvel adhérent', 'adherent' => $adherent, 'contributions' => $contributions]);
     }
 
