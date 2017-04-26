@@ -77,7 +77,7 @@
     <script>
         Highcharts.chart('histo', {
             chart: {
-                type: 'bar',
+                type: 'bar'
             },
             title: {
                 text: 'Etat livres libres/pris'
