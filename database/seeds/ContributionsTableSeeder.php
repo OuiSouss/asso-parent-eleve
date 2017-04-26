@@ -13,12 +13,17 @@ class ContributionsTableSeeder extends Seeder
     {
         DB::table('contributions')->insert([
             'name' => 'Normal',
-            'cost' => 10,
+            'cost' => 15,
+        ]);
+
+        DB::table('contributions')->insert([
+            'name' => 'Soutien',
+            'cost' => 25,
         ]);
 
         DB::table('contributions')->insert([
             'name' => 'Bienfaiteur',
-            'cost' => 50,
+            'cost' => 39,
         ]);
     }
 }
