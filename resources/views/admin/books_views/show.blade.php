@@ -83,12 +83,12 @@
         $('#modal_books_delete').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var book_reference_id = button.data('id');
-            var available = button.data('availability');
+            var available = button.data('available');
             var state = button.data('state');
             var modal = $(this);
             var url = '{{ route('admin.books_views.destroy', [':book_reference_id', ':availability', ':state']) }}';
             url = url.replace(':book_reference_id', book_reference_id);
-            url = url.replace(':availability', 1);
+            url = url.replace(':availability', available);
             url = url.replace(':state', state);
             modal.find('.save').on('click', function (event) {
                 $.ajax({
