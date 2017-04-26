@@ -25,7 +25,7 @@ $factory->define(App\Adherent::class, function (Faker\Generator $faker) {
         'address' => $faker->address,
         'city' => $faker->city,
         'postal_code' => $faker->postcode,
-        'phone' => $faker->phoneNumber,
+        'phone' => $faker->regexify('0[1-9][0-9]{8}'),
         'begin_adhesion' => $faker->dateTime,
         'end_adhesion' => $faker->dateTime,
         'contribution_id' => \App\Contribution::all()->random()->id,
@@ -33,28 +33,10 @@ $factory->define(App\Adherent::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Level::class, function (Faker\Generator $faker) {
-    return [
-        'name' => $faker->unique()->name,
-    ];
-});
-
-$factory->define(App\Subject::class, function (Faker\Generator $faker) {
-    return [
-        'name' => $faker->unique()->name,
-    ];
-});
-
-$factory->define(App\Section::class, function (Faker\Generator $faker) {
-    return [
-        'name' => $faker->unique()->name,
-    ];
-});
-
 $factory->define(App\BookReference::class, function (Faker\Generator $faker) {
     return [
-        'initial_price' => $faker->randomFloat(2, 0, 1000),
-        'ISBN' => $faker->isbn13,
+        'initial_price' => $faker->randomFloat(2, 10, 25),
+        'ISBN' => $faker->regexify('[1-9]{3}-[1-9]-[1-9]{4}-[1-9]{4}-[1-9]'),
         'section_id' => App\Section::all()->random()->id,
         'level_id' => App\Level::all()->random()->id,
         'subject_id' => App\Subject::all()->random()->id,
